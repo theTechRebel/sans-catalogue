@@ -19,6 +19,7 @@ import android.widget.Toast;
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.model.CatalogueData;
 import sans.co.zw.sansexposure.view.GridViewFragment;
+import sans.co.zw.sansexposure.view.StaggeredGridFragment;
 
 
 public class TabsActivity extends ActionBarActivity implements
@@ -160,7 +161,7 @@ class myFragmentStateAdapter extends FragmentStatePagerAdapter{
                 f = new GridViewFragment();
                 break;
             case 2:
-                f = new GridViewFragment();
+                f = new StaggeredGridFragment();
                 break;
         }
         return f;
