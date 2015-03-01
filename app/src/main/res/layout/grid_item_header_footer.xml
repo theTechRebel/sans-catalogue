@@ -3,12 +3,14 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/red">
+    android:background="@color/black">
 
     <TextView
         android:id="@+id/txt_title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
         android:layout_weight="1"
         android:gravity="center" />
 

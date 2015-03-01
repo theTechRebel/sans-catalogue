@@ -27,7 +27,7 @@ public class StaggeredGridFragment extends Fragment
         AbsListView.OnScrollListener,
         AbsListView.OnItemClickListener{
 
-    private static final String TAG = "StaggeredGridAFragment";
+    private static final String TAG = "StaggeredGridViewFragment";
 
     private StaggeredGridView mGridView;
     private GridViewAdapter mAdapter;
@@ -61,12 +61,11 @@ public class StaggeredGridFragment extends Fragment
             TextView txtHeaderTitle = (TextView) header.findViewById(R.id.txt_title);
             TextView txtFooterTitle = (TextView) footer.findViewById(R.id.txt_title);
 
-            txtHeaderTitle.setText("item Header");
-            txtFooterTitle.setText("item Footer");
+            txtHeaderTitle.setText("SANS Exposure Catalogue");
+            txtFooterTitle.setText("SANS Exposure CAtalogue");
 
             mGridView.addHeaderView(header);
             mGridView.addFooterView(footer);
-
         }
 
         if (mAdapter == null){

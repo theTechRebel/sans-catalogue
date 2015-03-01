@@ -26,7 +26,6 @@ public class GridViewAdapter extends ArrayAdapter<String>{
 
     static class ViewHolder {
         DynamicHeightTextView txtLineOne;
-        Button btnGo;
     }
 
     private final LayoutInflater mLayoutIflater;
@@ -51,10 +50,9 @@ public class GridViewAdapter extends ArrayAdapter<String>{
     public View getView(final int position, View convertView,final ViewGroup parent) {
         ViewHolder vh;
         if(convertView == null){
-            convertView = mLayoutIflater.inflate(R.layout.ggrid_item_listitem, parent, false);
+            convertView = mLayoutIflater.inflate(R.layout.grid_item_listitem, parent, false);
             vh = new ViewHolder();
             vh.txtLineOne = (DynamicHeightTextView) convertView.findViewById(R.id.txt_line1);
-            vh.btnGo =(Button) convertView.findViewById(R.id.btn_go);
             convertView.setTag(vh);
         }else{
             vh = (ViewHolder) convertView.getTag();
@@ -66,13 +64,6 @@ public class GridViewAdapter extends ArrayAdapter<String>{
         Log.d(TAG, "getView position: " + position + " h:"+ positionHeight);
         vh.txtLineOne.setHeightRatio(positionHeight);
         vh.txtLineOne.setText(getItem(position)+ position);
-        vh.btnGo.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Button Clicked Position "+ position, Toast.LENGTH_LONG).show();
-            }
-        });
         return convertView;
     }
 
