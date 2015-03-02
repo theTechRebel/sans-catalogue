@@ -31,7 +31,7 @@ public class StaggeredGridFragment extends Fragment
     private static final String TAG = "StaggeredGridViewFragment";
 
     private StaggeredGridView mGridView;
-    private GridViewAdapter mAdapter;
+    private StaggeredGridAdapter mAdapter;
     private ArrayList<GridViewData> objects = new ArrayList<GridViewData>();
     private boolean mHasRequestedMore;
 
@@ -67,12 +67,14 @@ public class StaggeredGridFragment extends Fragment
 
             mGridView.addHeaderView(header);
             mGridView.addFooterView(footer);
+        }
 
+        if(objects == null){
             setArrayListData();
         }
 
         if (mAdapter == null){
-            mAdapter = new GridViewAdapter(getActivity(), R.id.txt_line1);
+            mAdapter = new StaggeredGridAdapter(getActivity(), R.id.txt_line1);
         }
 
         for (GridViewData object : objects){
@@ -114,16 +116,14 @@ public class StaggeredGridFragment extends Fragment
     }
 
     private void onLoadMoreItems(){
-        //final ArrayList<String> sampleData = SampleData.generateSampleData();
-        //for(String data : sampleData){
-        //    mAdapter.add(data);
-        //}
-        // stash all the data in our backing store
-        //mData.addAll(sampleData);
-        //notify the adapter that we can update now
-        //mAdapter.notifyDataSetChanged();
-        mHasRequestedMore = false;
+        final ArrayList<GridViewData> moreData = GridViewData.generateMoreData();
 
+        for (GridViewData data : moreData){
+            mAdapter.add(data);
+        }
+        objects.addAll(moreData);
+        mAdapter.notifyDataSetChanged();
+        mHasRequestedMore = false;
     }
 
     private void setArrayListData(){
@@ -159,7 +159,7 @@ public class StaggeredGridFragment extends Fragment
                 "Skatter Skirt", "Crop top and Dress"
         };
 
-        for (int i = 0; i < pics.length; i++) {
+        for (int i = 0; i < pics.length - 1; i++) {
             GridViewData object = new GridViewData();
             object.setImageId(pics[i]);
             object.setItemName(text[i]);

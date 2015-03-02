@@ -1,6 +1,5 @@
 package sans.co.zw.sansexposure.controllers;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.model.CatalogueData;
-import sans.co.zw.sansexposure.view.GridViewFragment;
 import sans.co.zw.sansexposure.view.StaggeredGridFragment;
 
 
@@ -144,8 +142,10 @@ public class TabsActivity extends ActionBarActivity implements
 }
 
 
-class myFragmentStateAdapter extends FragmentStatePagerAdapter{
-    //implements FragmentStatePagerAdapter to change fragments as and when the user swipes accross tabs or selects a different tab
+class myFragmentStateAdapter extends FragmentPagerAdapter{
+    //implements FragmentPagerAdapter to retain each fragment in memory even when the user changes fragments
+    //implements FragmentStatePagerAdapter to destroy fragments that the user is not currently using
+    //but be ale to save certain state and restore that state when the use returns to the fragment
     public myFragmentStateAdapter(FragmentManager fm){
         super(fm);
     }
@@ -155,10 +155,10 @@ class myFragmentStateAdapter extends FragmentStatePagerAdapter{
         Fragment f = null;
         switch(position){
             case 0:
-                f = new GridViewFragment();
+                f = new StaggeredGridFragment();
                 break;
             case 1:
-                f = new GridViewFragment();
+                f = new StaggeredGridFragment();
                 break;
             case 2:
                 f = new StaggeredGridFragment();
