@@ -10,22 +10,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.etsy.android.grid.util.DynamicHeightImageView;
 import com.etsy.android.grid.util.DynamicHeightTextView;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import sans.co.zw.sansexposure.R;
+import sans.co.zw.sansexposure.model.GridViewData;
 
 /**
  * Created by Steve on 26/02/2015.
  */
-public class GridViewAdapter extends ArrayAdapter<String>{
+public class GridViewAdapter extends ArrayAdapter<Object>{
 
     private static final String TAG = "StaggeredGridViewAdapter";
 
     static class ViewHolder {
         DynamicHeightTextView txtLineOne;
+        DynamicHeightImageView imageViewOne;
     }
 
     private final LayoutInflater mLayoutIflater;
@@ -53,17 +56,23 @@ public class GridViewAdapter extends ArrayAdapter<String>{
             convertView = mLayoutIflater.inflate(R.layout.grid_item_listitem, parent, false);
             vh = new ViewHolder();
             vh.txtLineOne = (DynamicHeightTextView) convertView.findViewById(R.id.txt_line1);
+            vh.imageViewOne = (DynamicHeightImageView) convertView.findViewById(R.id.image_1);
             convertView.setTag(vh);
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
-        double positionHeight = getPositionRatio(position);
-        int backgroundIndex = position >= mBackgroundColors.size() ? position % mBackgroundColors.size() : position;
-        convertView.setBackgroundResource(mBackgroundColors.get(backgroundIndex));
 
-        Log.d(TAG, "getView position: " + position + " h:"+ positionHeight);
-        vh.txtLineOne.setHeightRatio(positionHeight);
-        vh.txtLineOne.setText(getItem(position)+ position);
+        //double positionHeight = getPositionRatio(position);
+        //int backgroundIndex = position >= mBackgroundColors.size() ? position % mBackgroundColors.size() : position;
+        //convertView.setBackgroundResource(mBackgroundColors.get(backgroundIndex));
+
+        //Log.d(TAG, "getView position: " + position + " h:"+ positionHeight);
+        //vh.txtLineOne.setHeightRatio(positionHeight);
+        GridViewData data = null;
+        data = (GridViewData) getItem(position);
+
+        vh.txtLineOne.setText(data.getItemName());
+        vh.imageViewOne.setImageResource(data.getImageId());
         return convertView;
     }
 

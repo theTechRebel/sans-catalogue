@@ -17,6 +17,7 @@ import com.etsy.android.grid.StaggeredGridView;
 import java.util.ArrayList;
 
 import sans.co.zw.sansexposure.R;
+import sans.co.zw.sansexposure.model.GridViewData;
 import sans.co.zw.sansexposure.src.SampleData;
 
 /**
@@ -31,7 +32,7 @@ public class StaggeredGridFragment extends Fragment
 
     private StaggeredGridView mGridView;
     private GridViewAdapter mAdapter;
-    private ArrayList<String> mData;
+    private ArrayList<GridViewData> objects = new ArrayList<GridViewData>();
     private boolean mHasRequestedMore;
 
 
@@ -66,18 +67,16 @@ public class StaggeredGridFragment extends Fragment
 
             mGridView.addHeaderView(header);
             mGridView.addFooterView(footer);
+
+            setArrayListData();
         }
 
         if (mAdapter == null){
             mAdapter = new GridViewAdapter(getActivity(), R.id.txt_line1);
         }
 
-        if (mData == null){
-            mData = SampleData.generateSampleData();
-        }
-
-        for (String data : mData){
-            mAdapter.add(data);
+        for (GridViewData object : objects){
+            mAdapter.add(object);
         }
 
         mGridView.setAdapter(mAdapter);
@@ -115,15 +114,56 @@ public class StaggeredGridFragment extends Fragment
     }
 
     private void onLoadMoreItems(){
-        final ArrayList<String> sampleData = SampleData.generateSampleData();
-        for(String data : sampleData){
-            mAdapter.add(data);
-        }
+        //final ArrayList<String> sampleData = SampleData.generateSampleData();
+        //for(String data : sampleData){
+        //    mAdapter.add(data);
+        //}
         // stash all the data in our backing store
-        mData.addAll(sampleData);
+        //mData.addAll(sampleData);
         //notify the adapter that we can update now
-        mAdapter.notifyDataSetChanged();
+        //mAdapter.notifyDataSetChanged();
         mHasRequestedMore = false;
 
+    }
+
+    private void setArrayListData(){
+        //data can be pulled from data source
+
+        // references to our images
+        int[] pics = {
+                R.drawable.sample_2, R.drawable.sample_3,
+                R.drawable.sample_4, R.drawable.sample_5,
+                R.drawable.sample_6, R.drawable.sample_7,
+                R.drawable.sample_0, R.drawable.sample_1,
+                R.drawable.sample_2, R.drawable.sample_3,
+                R.drawable.sample_4, R.drawable.sample_5,
+                R.drawable.sample_6, R.drawable.sample_7,
+                R.drawable.sample_0, R.drawable.sample_1,
+                R.drawable.sample_2, R.drawable.sample_3,
+                R.drawable.sample_4, R.drawable.sample_5,
+                R.drawable.sample_6, R.drawable.sample_7
+        };
+
+        // references to images text
+        String[] text = {
+                "Skatter Skirt", "Crop top and Dress",
+                "Skatter Skirt", "Crop top and Dress",
+                "Skatter Skirt", "Crop top and Dress",
+                "Skatter Skirt", "Crop top and Dress",
+                "Skatter Skirt", "Crop top and Dress",
+                "Skatter Skirt", "Crop top and Dress",
+                "Skatter Skirt", "Crop top and Dress",
+                "Skatter Skirt", "Crop top and Dress",
+                "Skatter Skirt", "Crop top and Dress",
+                "Skatter Skirt", "Crop top and Dress",
+                "Skatter Skirt", "Crop top and Dress"
+        };
+
+        for (int i = 0; i < pics.length; i++) {
+            GridViewData object = new GridViewData();
+            object.setImageId(pics[i]);
+            object.setItemName(text[i]);
+            objects.add(object);
+        }
     }
 }

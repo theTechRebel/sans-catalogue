@@ -6,13 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.etsy.android.grid.util.DynamicHeightImageView
+        android:id="@+id/image_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@+id/image_1"/>
 
     <com.etsy.android.grid.util.DynamicHeightTextView
         android:id="@+id/txt_line1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/image_1"
         android:gravity="center"/>
-
+    </RelativeLayout>
     <!--
     <Button
         android:id="@+id/btn_go"
