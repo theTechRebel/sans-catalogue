@@ -92,7 +92,7 @@ public class TabsActivity extends ActionBarActivity implements
                 c =  getDataFromProvider(CatalogueData.Designers.CONTENT_URI);
                 break;
             case 1:
-                c = getDataFromProvider(CatalogueData.Collections.CONTENT_URI);
+
                 break;
             case 2:
 

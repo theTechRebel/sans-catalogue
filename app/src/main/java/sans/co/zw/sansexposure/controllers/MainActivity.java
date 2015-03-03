@@ -1,5 +1,7 @@
 package sans.co.zw.sansexposure.controllers;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -20,6 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.model.CatalogueDBAdapter;
@@ -33,6 +36,7 @@ public class MainActivity extends ActionBarActivity implements Router {
 
     ActionBar actionBar;
     final static String APP_PATH_SD_CARD = "/catalogue/";
+    File file = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class MainActivity extends ActionBarActivity implements Router {
             swapFragments(0);
         }
 
-        saveFilesToSdCard();
+        save(CatalogueData.Designers.CONTENT_URI);
     }
 
 
@@ -87,31 +91,44 @@ public class MainActivity extends ActionBarActivity implements Router {
         startActivity(intent);
     }
 
-    private void saveFilesToSdCard(){
-        int[] pics = {
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7,
-                R.drawable.sample_0, R.drawable.sample_1,
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7,
-                R.drawable.sample_0, R.drawable.sample_1,
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7
-        };
-        int i = 0;
-        for(i=0;i<pics.length;i++){
-            Bitmap img = BitmapFactory.decodeResource(getResources(),pics[i]);
-            boolean file = saveImageToInternalStorage(img,"item_"+i+".png");
-            if(file){
-                Toast.makeText(this, "File Created succesfullly",Toast.LENGTH_LONG).show();
-            }else{
-                Toast.makeText(this, "Failed to create file",Toast.LENGTH_LONG).show();
-            }
-
+    private void save(Uri contentUri){
+        int pics[] = {};
+        if(contentUri == CatalogueData.Designers.CONTENT_URI){
+            pics = CatalogueData.Designers.PICS;
         }
+
+        for(int i=0;i<pics.length;i++){
+            Bitmap img = BitmapFactory.decodeResource(getResources(),pics[i]);
+            String file = saveImageToInternalStorage(img, pics[i]+".png");
+            populateDatabase(contentUri, file, i);
+        }
+    }
+
+    private String saveImageToInternalStorage(Bitmap img, String name){
+        try {
+            file = getFilesDir();
+            FileOutputStream fos = openFileOutput(name,MODE_PRIVATE);
+            img.compress(Bitmap.CompressFormat.PNG, 50,fos);
+            fos.close();
+        } catch (IOException e) {
+            Log.d("Error Saving File: ",""+e.getMessage());
+        }
+        return file+"/"+name;
+    }
+
+    private void populateDatabase(Uri contentUri, String imageLocation, Integer i){
+        ContentValues values = new ContentValues();
+        if(contentUri == CatalogueData.Designers.CONTENT_URI){
+            String[] data = CatalogueData.Designers.data.get(i);
+            values.put(CatalogueData.Designers.COL_DESIGNER, data[0]);
+            values.put(CatalogueData.Designers.COL_LABEL, data[1]);
+            values.put(CatalogueData.Designers.COL_FULLNAME, data[2]);
+            values.put(CatalogueData.Designers.COL_PIC, imageLocation);
+        }
+
+        Uri returnUri = getContentResolver().insert(contentUri,values);
+        long id = ContentUris.parseId(returnUri);
+        Toast.makeText(this,"Succesfully Inserted Table Value ID number: "+id,Toast.LENGTH_LONG).show();
     }
 
     private boolean saveImageToExternalStorage(Bitmap img, String name){
@@ -140,15 +157,5 @@ public class MainActivity extends ActionBarActivity implements Router {
         }
     }
 
-    private boolean saveImageToInternalStorage(Bitmap img, String name){
-        try {
-            FileOutputStream fos = openFileOutput(name,MODE_PRIVATE);
-            img.compress(Bitmap.CompressFormat.PNG, 50,fos);
-            fos.close();
-            return true;
-        } catch (IOException e) {
-            Log.d("File",""+e.getMessage());
-            return false;
-        }
-    }
+
 }

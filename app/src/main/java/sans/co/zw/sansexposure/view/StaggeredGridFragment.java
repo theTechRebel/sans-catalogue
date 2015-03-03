@@ -1,7 +1,12 @@
 package sans.co.zw.sansexposure.view;
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +21,7 @@ import com.etsy.android.grid.StaggeredGridView;
 import java.util.ArrayList;
 
 import sans.co.zw.sansexposure.R;
+import sans.co.zw.sansexposure.model.CatalogueData;
 import sans.co.zw.sansexposure.model.GridViewData;
 
 /**
@@ -24,9 +30,31 @@ import sans.co.zw.sansexposure.model.GridViewData;
 public class StaggeredGridFragment extends Fragment
     implements
         AbsListView.OnScrollListener,
-        AbsListView.OnItemClickListener{
+        AbsListView.OnItemClickListener,
+        LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String TAG = "StaggeredGridViewFragment";
+    private String mDesigner;
+    private static final int DESIGNERS_LOADER = 0;
+
+    private static final String[] DESIGNERS_COLUNMS = {
+            CatalogueData.Designers.TABLE_NAME+"."+CatalogueData.Designers.COL_ID,
+            CatalogueData.Designers.COL_DESIGNER,
+            CatalogueData.Designers.COL_LABEL,
+            CatalogueData.Designers.COL_FULLNAME,
+            CatalogueData.Designers.COL_BIO,
+            CatalogueData.Designers.COL_PIC
+    };
+
+    public static final int COL_DESIGNER_ID = 0;
+    public static final int COL_DESIGNER = 1;
+    public static final int COL_DESIGNER_LABEL = 2;
+    public static final int COL_DESIGNER_FULLNAME = 3;
+    public static final int COL_DESIGNER_BIO = 4;
+    public static final int COL_DESIGNER_PIC = 5;
+
+
+
 
     private StaggeredGridView mGridView;
     private StaggeredGridAdapter mAdapter;
@@ -42,13 +70,15 @@ public class StaggeredGridFragment extends Fragment
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        //return super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_staggeredgridview, container, false);
     }
 
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        //Loader Code!
+        //getLoaderManager().initLoader(DESIGNERS_LOADER,null,this);
 
         mGridView = (StaggeredGridView)getView().findViewById(R.id.grid_view);
 
@@ -123,6 +153,32 @@ public class StaggeredGridFragment extends Fragment
         mAdapter.notifyDataSetChanged();
         mHasRequestedMore = false;
     }
+
+
+//take a look at Loaders before changing code starting here
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(
+                getActivity(),
+                CatalogueData.Designers.CONTENT_URI,
+                DESIGNERS_COLUNMS,
+                null,
+                null,
+                null
+        );
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        //mAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        //mAdapter.swapCursor(null);
+    }
+
+//ending here
 
     private void setArrayListData(){
         //data can be pulled from data source

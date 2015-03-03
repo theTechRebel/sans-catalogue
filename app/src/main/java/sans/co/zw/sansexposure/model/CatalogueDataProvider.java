@@ -5,6 +5,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
@@ -130,8 +131,39 @@ public class CatalogueDataProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
-        return null;
+    public Uri insert(Uri uri, ContentValues values){
+        Uri returnUri;
+        long _id;
+        switch (uriMatcher.match(uri)){
+
+            case DESIGNERS_ALL_RECORDS:
+                 _id = db.insert(CatalogueData.Designers.TABLE_NAME,
+                        null,
+                        values);
+                if(_id > 0){
+                    returnUri = CatalogueData.Designers.buildUri(_id);
+                }else{
+                    throw new SQLException("Failed to insert row into: "+ uri);
+                }
+                break;
+
+            case COLLECTIONS_ALL_RECORDS:
+                _id = db.insert(CatalogueData.Collections.TABLE_NAME,
+                        null,
+                        values);
+                if(_id > 0){
+                    returnUri = CatalogueData.Collections.buildUri(_id);
+                }else{
+                    throw new SQLException("Failed to insert row into: "+ uri);
+                }
+                break;
+
+            default:
+                throw new UnsupportedOperationException("404 URI Not Found: "+ uri);
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return returnUri;
     }
 
     @Override

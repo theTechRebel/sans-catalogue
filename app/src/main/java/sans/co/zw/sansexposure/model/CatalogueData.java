@@ -3,6 +3,14 @@ package sans.co.zw.sansexposure.model;
 import android.content.ContentUris;
 import android.net.Uri;
 
+import java.lang.reflect.Array;
+import java.util.AbstractMap;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import sans.co.zw.sansexposure.R;
+
 /**
  * Created by Steve on 22/02/2015.
  */
@@ -11,7 +19,7 @@ public class CatalogueData{
     public static final String CONTENT_AUTHORITY = "sans.co.zw.sansexposure.model.CatalogueDataProvider";
 
     public static final String DATABASE_NAME = "sans_catalogue";
-    public static final int DATABASE_VERSION = 29;
+    public static final int DATABASE_VERSION = 32;
 
     public static final class Designers{
         public static final String TABLE_NAME = "designers";
@@ -24,11 +32,27 @@ public class CatalogueData{
             return ContentUris.withAppendedId(CONTENT_URI,id);
         }
 
-        public static final String STATEMENT_INSERT = "INSERT INTO `designers` (`_ID`, `surname`, `label`, `full_name`, `bio`, `pic`) VALUES ";
-        public static final String ROW_1 = "(1, 'Lady_Cee_Kay', 'Lady Cee Kay', 'Cecelia', 'N/A', 'image_location_here'); ";
-        public static final String ROW_2 = "(2, 'Tariro_The_Jeweler', 'Tariro The Jeweler', 'Tariro The Jeweler', 'N/A', 'image_location_here'); ";
+        private static final String[] ROW_1 = {"Lady_Cee_Kay", "Lady Cee Kay", "Cecelia", "N/A"};
+        private static final String[] ROW_2 = {"Tariro_The_Jeweler", "Tariro The Jeweler", "Tariro The Jeweler", "N/A"};
+        public static final int[] PICS      = {R.drawable.lady_cee_kay, R.drawable.tariro_the_jeweler};
+
+        public static Map<Integer, String[]> data = createDataMap();
+        private static Map<Integer, String[]> createDataMap(){
+            Map<Integer, String[]> result = new HashMap<Integer, String[]>();
+            result.put(0,ROW_1);
+            result.put(1,ROW_2);
+            return java.util.Collections.unmodifiableMap(result);
+        }
+
+
+
+        //public static final String STATEMENT_INSERT = "INSERT INTO `designers` (`_ID`, `surname`, `label`, `full_name`, `bio`, `pic`) VALUES ";
+        //public static final String ROW_1 = "(1, 'Lady_Cee_Kay', 'Lady Cee Kay', 'Cecelia', 'N/A', 'image_location_here'); ";
+        //public static final String ROW_2 = "(2, 'Tariro_The_Jeweler', 'Tariro The Jeweler', 'Tariro The Jeweler', 'N/A', 'image_location_here'); ";
 
         public static final String COL_ID = "_ID";
+        public static final String COL_DESIGNER = "designer";
+        public static final String COL_FULLNAME = "full_name";
         public static final String COL_LABEL = "label";
         public static final String COL_BIO = "bio";
         public static final String COL_PIC = "pic";
@@ -74,7 +98,7 @@ public class CatalogueData{
     //create table statements
     public static final String CREATE_DESIGNERS_TABLE = "CREATE TABLE IF NOT EXISTS `designers` (\n" +
             "  `_ID` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-            "  `surname` VARCHAR(255),\n" +
+            "  `designer` VARCHAR(255),\n" +
             "  `label` VARCHAR(256),\n" +
             "  `full_name` VARCHAR(255),\n" +
             "  `bio` VARCHAR(255),\n" +
