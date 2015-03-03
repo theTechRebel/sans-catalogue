@@ -27,8 +27,10 @@ public class StaggeredGridAdapter extends ArrayAdapter<Object>{
     private static final String TAG = "StaggeredGridViewAdapter";
 
     static class ViewHolder {
-        DynamicHeightTextView txtLineOne;
-        DynamicHeightImageView imageViewOne;
+        DynamicHeightTextView txtItemName;
+        DynamicHeightTextView txtItemPrice;
+        DynamicHeightTextView txtItemDesigner;
+        DynamicHeightImageView imgItem;
     }
 
     private final LayoutInflater mLayoutIflater;
@@ -44,8 +46,11 @@ public class StaggeredGridAdapter extends ArrayAdapter<Object>{
         if(convertView == null){
             convertView = mLayoutIflater.inflate(R.layout.grid_item_listitem, parent, false);
             vh = new ViewHolder();
-            vh.txtLineOne = (DynamicHeightTextView) convertView.findViewById(R.id.txt_line1);
-            vh.imageViewOne = (DynamicHeightImageView) convertView.findViewById(R.id.image_1);
+            vh.txtItemName      = (DynamicHeightTextView) convertView.findViewById(R.id.txt_line1);
+            vh.txtItemDesigner  = (DynamicHeightTextView) convertView.findViewById(R.id.txt_designer);
+            vh.txtItemPrice     = (DynamicHeightTextView) convertView.findViewById(R.id.txt_price);
+            vh.imgItem     = (DynamicHeightImageView) convertView.findViewById(R.id.image_1);
+
             convertView.setTag(vh);
         }else{
             vh = (ViewHolder) convertView.getTag();
@@ -54,8 +59,10 @@ public class StaggeredGridAdapter extends ArrayAdapter<Object>{
         GridViewData data = null;
         data = (GridViewData) getItem(position);
 
-        vh.txtLineOne.setText(data.getItemName());
-        vh.imageViewOne.setImageResource(data.getImageId());
+        vh.txtItemName.setText(data.getItemName());
+        vh.txtItemDesigner.setText(data.getItemDesigner());
+        vh.txtItemPrice.setText(data.getItemPrice());
+        vh.imgItem.setImageResource(data.getImageId());
         return convertView;
     }
 }

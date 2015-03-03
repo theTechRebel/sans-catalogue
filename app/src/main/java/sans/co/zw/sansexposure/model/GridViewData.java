@@ -79,10 +79,42 @@ public class GridViewData {
                 "Skatter Skirt", "Crop top and Dress"
         };
 
+        // references to images designer
+        String[] designer = {
+                "Lady Cee Kay", "Tariro the Jeweler",
+                "AfroKreative", "K-7",
+                "Haus Of Stone", "DeMoyo",
+                "House of Targeran", "Amara",
+                "Lady Cee Kay", "Tariro the Jeweler",
+                "AfroKreative", "K-7",
+                "Haus Of Stone", "DeMoyo",
+                "House of Targeran", "Amara",
+                "Lady Cee Kay", "Tariro the Jeweler",
+                "AfroKreative", "K-7",
+                "Haus Of Stone", "DeMoyo"
+        };
+
+        // references to images price
+        String[] price = {
+                "$35.00", "$50.00",
+                "$40.00", "$150.00",
+                "$80.00", "$25.00",
+                "$15.00", "$60.00",
+                "$35.00", "$50.00",
+                "$40.00", "$150.00",
+                "$80.00", "$25.00",
+                "$15.00", "$60.00",
+                "$35.00", "$50.00",
+                "$40.00", "$150.00",
+                "$80.00", "$25.00"
+        };
+
         for (int i = 0; i < pics.length - 1; i++) {
             GridViewData object = new GridViewData();
             object.setImageId(pics[i]);
             object.setItemName(text[i]);
+            object.setItemDesigner(designer[i]);
+            object.setItemPrice(price[i]);
             data.add(object);
         }
 

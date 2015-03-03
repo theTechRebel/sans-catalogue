@@ -1,7 +1,6 @@
 package sans.co.zw.sansexposure.view;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.model.GridViewData;
-import sans.co.zw.sansexposure.src.SampleData;
 
 /**
  * Created by Steve on 26/02/2015.
@@ -57,8 +55,8 @@ public class StaggeredGridFragment extends Fragment
         if (savedInstanceState == null){
             final LayoutInflater layoutInflater = getActivity().getLayoutInflater();
 
-            View header = layoutInflater.inflate(R.layout.grid_item_header_footer, null);
-            View footer = layoutInflater.inflate(R.layout.grid_item_header_footer, null);
+            View header = layoutInflater.inflate(R.layout.grid_layout_header_footer, null);
+            View footer = layoutInflater.inflate(R.layout.grid_layout_header_footer, null);
             TextView txtHeaderTitle = (TextView) header.findViewById(R.id.txt_title);
             TextView txtFooterTitle = (TextView) footer.findViewById(R.id.txt_title);
 
@@ -159,10 +157,44 @@ public class StaggeredGridFragment extends Fragment
                 "Skatter Skirt", "Crop top and Dress"
         };
 
+        // references to images designer
+        String[] designer = {
+                "Lady Cee Kay", "Tariro the Jeweler",
+                "AfroKreative", "K-7",
+                "Haus Of Stone", "DeMoyo",
+                "House of Targeran", "Amara",
+                "Lady Cee Kay", "Tariro the Jeweler",
+                "AfroKreative", "K-7",
+                "Haus Of Stone", "DeMoyo",
+                "House of Targeran", "Amara",
+                "Lady Cee Kay", "Tariro the Jeweler",
+                "AfroKreative", "K-7",
+                "Haus Of Stone", "DeMoyo"
+        };
+
+        // references to images price
+        String[] price = {
+                "$35.00", "$50.00",
+                "$40.00", "$150.00",
+                "$80.00", "$25.00",
+                "$15.00", "$60.00",
+                "$35.00", "$50.00",
+                "$40.00", "$150.00",
+                "$80.00", "$25.00",
+                "$15.00", "$60.00",
+                "$35.00", "$50.00",
+                "$40.00", "$150.00",
+                "$80.00", "$25.00"
+        };
+
+
+
         for (int i = 0; i < pics.length - 1; i++) {
             GridViewData object = new GridViewData();
             object.setImageId(pics[i]);
             object.setItemName(text[i]);
+            object.setItemDesigner(designer[i]);
+            object.setItemPrice(price[i]);
             objects.add(object);
         }
     }
