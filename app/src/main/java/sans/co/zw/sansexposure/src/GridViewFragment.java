@@ -32,7 +32,7 @@ public class GridViewFragment extends Fragment {
                 //app context
                 //getActivity(),
                 //the layout ID of the individual list items textview used to create each listview item
-                //R.layout.textview_listitem,
+                //R.layout._textview_listitem,
                 //the ID of the individual list items textview used to create each listview item
                 //R.id.list_item_textview,
                 //the array list wit the data
@@ -112,7 +112,7 @@ public class GridViewFragment extends Fragment {
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (convertView == null) {  // if it's not recycled, initialize some attributes
                 grid = new View(ctx);
-                grid = inflater.inflate(R.layout.gridview_listitem, null);
+                grid = inflater.inflate(R.layout._gridview_listitem, null);
                 textView = (TextView)grid.findViewById(R.id.grid_text);
                 imageView = (ImageView)grid.findViewById(R.id.grid_image);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
