@@ -119,31 +119,19 @@ public class StaggeredGridFragment extends Fragment
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        Log.d(TAG, "onScrollStateChanged: "+scrollState);
     }
 
     @Override
     public void onScroll(final AbsListView view,final int firstVisibleItem,final int visibleItemCount,final int totalItemCount) {
-        Log.d(TAG,"onScroll firstVisibleItem: " + firstVisibleItem +
-                  " visibleItmeCount: "+ visibleItemCount+
-                  " totalItemCount: " + totalItemCount);
-
         //handling requests
         if(!mHasRequestedMore){
-            int lastInScreen = firstVisibleItem +
-                    visibleItemCount;
+            int lastInScreen = firstVisibleItem + visibleItemCount;
             if(lastInScreen >= totalItemCount){
-                Log.d(TAG, "onScroll lastInScreen - so load more");
                 mHasRequestedMore = true;
-                onLoadMoreItems();
+                getLoaderManager().restartLoader(DESIGNERS_LOADER,null,this);
+                mHasRequestedMore = false;
             }
         }
-
-    }
-
-    private void onLoadMoreItems(){
-        getLoaderManager().restartLoader(DESIGNERS_LOADER,null,this);
-        mHasRequestedMore = false;
     }
 
 
