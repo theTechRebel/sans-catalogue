@@ -36,19 +36,13 @@ public class CatalogueData{
         private static final String[] ROW_2 = {"Tariro_The_Jeweler", "Tariro The Jeweler", "Tariro The Jeweler", "N/A"};
         public static final int[] PICS      = {R.drawable.lady_cee_kay, R.drawable.tariro_the_jeweler};
 
-        public static Map<Integer, String[]> data = createDataMap();
+        public static Map<Integer, String[]> DB_DATA = createDataMap();
         private static Map<Integer, String[]> createDataMap(){
             Map<Integer, String[]> result = new HashMap<Integer, String[]>();
             result.put(0,ROW_1);
             result.put(1,ROW_2);
             return java.util.Collections.unmodifiableMap(result);
         }
-
-
-
-        //public static final String STATEMENT_INSERT = "INSERT INTO `designers` (`_ID`, `surname`, `label`, `full_name`, `bio`, `pic`) VALUES ";
-        //public static final String ROW_1 = "(1, 'Lady_Cee_Kay', 'Lady Cee Kay', 'Cecelia', 'N/A', 'image_location_here'); ";
-        //public static final String ROW_2 = "(2, 'Tariro_The_Jeweler', 'Tariro The Jeweler', 'Tariro The Jeweler', 'N/A', 'image_location_here'); ";
 
         public static final String COL_ID = "_ID";
         public static final String COL_DESIGNER = "designer";

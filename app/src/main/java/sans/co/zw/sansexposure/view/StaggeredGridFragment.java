@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.model.CatalogueData;
+import sans.co.zw.sansexposure.model.CatalogueDataLoader;
 import sans.co.zw.sansexposure.model.GridViewData;
 
 /**
@@ -31,7 +32,7 @@ public class StaggeredGridFragment extends Fragment
     implements
         AbsListView.OnScrollListener,
         AbsListView.OnItemClickListener,
-        LoaderManager.LoaderCallbacks<Cursor>{
+        LoaderManager.LoaderCallbacks<ArrayList<GridViewData>>{
 
     private static final String TAG = "StaggeredGridViewFragment";
     private String mDesigner;
@@ -58,6 +59,7 @@ public class StaggeredGridFragment extends Fragment
 
     private StaggeredGridView mGridView;
     private StaggeredGridAdapter mAdapter;
+    private CatalogueDataLoader mLoader;
     private ArrayList<GridViewData> objects = new ArrayList<GridViewData>();
     private boolean mHasRequestedMore;
 
@@ -77,8 +79,8 @@ public class StaggeredGridFragment extends Fragment
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //Loader Code!
-        //getLoaderManager().initLoader(DESIGNERS_LOADER,null,this);
+        //start the loader here
+        getLoaderManager().initLoader(DESIGNERS_LOADER,null,this);
 
         mGridView = (StaggeredGridView)getView().findViewById(R.id.grid_view);
 
@@ -91,21 +93,17 @@ public class StaggeredGridFragment extends Fragment
             TextView txtFooterTitle = (TextView) footer.findViewById(R.id.txt_title);
 
             txtHeaderTitle.setText("SANS Exposure Catalogue");
-            txtFooterTitle.setText("SANS Exposure CAtalogue");
+            txtFooterTitle.setText("SANS Exposure Catalogue");
 
             mGridView.addHeaderView(header);
             mGridView.addFooterView(footer);
-        }
-
-        if(objects == null){
-            setArrayListData();
         }
 
         if (mAdapter == null){
             mAdapter = new StaggeredGridAdapter(getActivity(), R.id.txt_line1);
         }
 
-        for (GridViewData object : objects){
+        for(GridViewData object : objects){
             mAdapter.add(object);
         }
 
@@ -144,114 +142,27 @@ public class StaggeredGridFragment extends Fragment
     }
 
     private void onLoadMoreItems(){
-        final ArrayList<GridViewData> moreData = GridViewData.generateMoreData();
-
-        for (GridViewData data : moreData){
-            mAdapter.add(data);
-        }
-        objects.addAll(moreData);
-        mAdapter.notifyDataSetChanged();
+        getLoaderManager().restartLoader(DESIGNERS_LOADER,null,this);
         mHasRequestedMore = false;
     }
 
 
-//take a look at Loaders before changing code starting here
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(
-                getActivity(),
-                CatalogueData.Designers.CONTENT_URI,
-                DESIGNERS_COLUNMS,
-                null,
-                null,
-                null
-        );
+    public Loader<ArrayList<GridViewData>> onCreateLoader(int id, Bundle args) {
+        return mLoader = new CatalogueDataLoader(getActivity());
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        //mAdapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        //mAdapter.swapCursor(null);
-    }
-
-//ending here
-
-    private void setArrayListData(){
-        //data can be pulled from data source
-
-        // references to our images
-        int[] pics = {
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7,
-                R.drawable.sample_0, R.drawable.sample_1,
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7,
-                R.drawable.sample_0, R.drawable.sample_1,
-                R.drawable.sample_2, R.drawable.sample_3,
-                R.drawable.sample_4, R.drawable.sample_5,
-                R.drawable.sample_6, R.drawable.sample_7
-        };
-
-        // references to images text
-        String[] text = {
-                "Skatter Skirt", "Crop top and Dress",
-                "Skatter Skirt", "Crop top and Dress",
-                "Skatter Skirt", "Crop top and Dress",
-                "Skatter Skirt", "Crop top and Dress",
-                "Skatter Skirt", "Crop top and Dress",
-                "Skatter Skirt", "Crop top and Dress",
-                "Skatter Skirt", "Crop top and Dress",
-                "Skatter Skirt", "Crop top and Dress",
-                "Skatter Skirt", "Crop top and Dress",
-                "Skatter Skirt", "Crop top and Dress",
-                "Skatter Skirt", "Crop top and Dress"
-        };
-
-        // references to images designer
-        String[] designer = {
-                "Lady Cee Kay", "Tariro the Jeweler",
-                "AfroKreative", "K-7",
-                "Haus Of Stone", "DeMoyo",
-                "House of Targeran", "Amara",
-                "Lady Cee Kay", "Tariro the Jeweler",
-                "AfroKreative", "K-7",
-                "Haus Of Stone", "DeMoyo",
-                "House of Targeran", "Amara",
-                "Lady Cee Kay", "Tariro the Jeweler",
-                "AfroKreative", "K-7",
-                "Haus Of Stone", "DeMoyo"
-        };
-
-        // references to images price
-        String[] price = {
-                "$35.00", "$50.00",
-                "$40.00", "$150.00",
-                "$80.00", "$25.00",
-                "$15.00", "$60.00",
-                "$35.00", "$50.00",
-                "$40.00", "$150.00",
-                "$80.00", "$25.00",
-                "$15.00", "$60.00",
-                "$35.00", "$50.00",
-                "$40.00", "$150.00",
-                "$80.00", "$25.00"
-        };
-
-
-
-        for (int i = 0; i < pics.length - 1; i++) {
-            GridViewData object = new GridViewData();
-            object.setImageId(pics[i]);
-            object.setItemName(text[i]);
-            object.setItemDesigner(designer[i]);
-            object.setItemPrice(price[i]);
-            objects.add(object);
+    public void onLoadFinished(Loader<ArrayList<GridViewData>> loader, ArrayList<GridViewData> data) {
+        for (GridViewData d : data){
+            mAdapter.add(d);
         }
+        objects.addAll(data);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<GridViewData>> loader) {
+
     }
 }

@@ -119,7 +119,7 @@ public class MainActivity extends ActionBarActivity implements Router {
     private void populateDatabase(Uri contentUri, String imageLocation, Integer i){
         ContentValues values = new ContentValues();
         if(contentUri == CatalogueData.Designers.CONTENT_URI){
-            String[] data = CatalogueData.Designers.data.get(i);
+            String[] data = CatalogueData.Designers.DB_DATA.get(i);
             values.put(CatalogueData.Designers.COL_DESIGNER, data[0]);
             values.put(CatalogueData.Designers.COL_LABEL, data[1]);
             values.put(CatalogueData.Designers.COL_FULLNAME, data[2]);
@@ -127,10 +127,11 @@ public class MainActivity extends ActionBarActivity implements Router {
         }
 
         Uri returnUri = getContentResolver().insert(contentUri,values);
-        long id = ContentUris.parseId(returnUri);
-        Toast.makeText(this,"Succesfully Inserted Table Value ID number: "+id,Toast.LENGTH_LONG).show();
+        //long id = ContentUris.parseId(returnUri);
+        //Toast.makeText(this,"Succesfully Inserted Table Value ID number: "+id,Toast.LENGTH_LONG).show();
     }
 
+    //not bieng used but might be needed a bit later
     private boolean saveImageToExternalStorage(Bitmap img, String name){
         try {
             String fullPath = Environment.getExternalStorageDirectory().getAbsolutePath()+APP_PATH_SD_CARD;
