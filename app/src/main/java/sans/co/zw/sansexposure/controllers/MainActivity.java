@@ -99,12 +99,12 @@ public class MainActivity extends ActionBarActivity implements Router {
 
         for(int i=0;i<pics.length;i++){
             Bitmap img = BitmapFactory.decodeResource(getResources(),pics[i]);
-            String file = saveImageToInternalStorage(img, pics[i]+".png");
+            Uri file = saveImageToInternalStorage(img, pics[i]+".png");
             populateDatabase(contentUri, file, i);
         }
     }
 
-    private String saveImageToInternalStorage(Bitmap img, String name){
+    private Uri saveImageToInternalStorage(Bitmap img, String name){
         try {
             file = getFilesDir();
             FileOutputStream fos = openFileOutput(name,MODE_PRIVATE);
@@ -113,22 +113,24 @@ public class MainActivity extends ActionBarActivity implements Router {
         } catch (IOException e) {
             Log.d("Error Saving File: ",""+e.getMessage());
         }
-        return file+"/"+name;
+        //return file+"/"+name;
+        File outFile = getFileStreamPath(name);
+        return Uri.fromFile(outFile);
     }
 
-    private void populateDatabase(Uri contentUri, String imageLocation, Integer i){
+    private void populateDatabase(Uri contentUri, Uri imageLocation, Integer i){
         ContentValues values = new ContentValues();
         if(contentUri == CatalogueData.Designers.CONTENT_URI){
             String[] data = CatalogueData.Designers.DB_DATA.get(i);
             values.put(CatalogueData.Designers.COL_DESIGNER, data[0]);
             values.put(CatalogueData.Designers.COL_LABEL, data[1]);
             values.put(CatalogueData.Designers.COL_FULLNAME, data[2]);
-            values.put(CatalogueData.Designers.COL_PIC, imageLocation);
+            values.put(CatalogueData.Designers.COL_PIC, imageLocation.toString());
         }
 
         Uri returnUri = getContentResolver().insert(contentUri,values);
         //long id = ContentUris.parseId(returnUri);
-        //Toast.makeText(this,"Succesfully Inserted Table Value ID number: "+id,Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"Created Image: "+imageLocation.toString(),Toast.LENGTH_LONG).show();
     }
 
     //not bieng used but might be needed a bit later

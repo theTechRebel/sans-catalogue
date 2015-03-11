@@ -1,5 +1,6 @@
 package sans.co.zw.sansexposure.view;
 
+import android.content.AsyncTaskLoader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,7 +33,7 @@ public class StaggeredGridFragment extends Fragment
     implements
         AbsListView.OnScrollListener,
         AbsListView.OnItemClickListener,
-        LoaderManager.LoaderCallbacks<ArrayList<GridViewData>>{
+        LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final String TAG = "StaggeredGridViewFragment";
     private String mDesigner;
@@ -47,21 +48,15 @@ public class StaggeredGridFragment extends Fragment
             CatalogueData.Designers.COL_PIC
     };
 
-    public static final int COL_DESIGNER_ID = 0;
-    public static final int COL_DESIGNER = 1;
-    public static final int COL_DESIGNER_LABEL = 2;
-    public static final int COL_DESIGNER_FULLNAME = 3;
-    public static final int COL_DESIGNER_BIO = 4;
-    public static final int COL_DESIGNER_PIC = 5;
-
 
 
 
     private StaggeredGridView mGridView;
-    private StaggeredGridAdapter mAdapter;
+    private StaggeredGridCursorAdapter mAdapter;
     private CatalogueDataLoader mLoader;
     private ArrayList<GridViewData> objects = new ArrayList<GridViewData>();
     private boolean mHasRequestedMore;
+    private Cursor c;
 
 
     @Override
@@ -100,12 +95,13 @@ public class StaggeredGridFragment extends Fragment
         }
 
         if (mAdapter == null){
-            mAdapter = new StaggeredGridAdapter(getActivity(), R.id.txt_line1);
+            //mAdapter = new StaggeredGridAdapter(getActivity(), R.id.txt_line1);
+            mAdapter = new StaggeredGridCursorAdapter(getActivity(),c,false,R.id.txt_line1);
         }
 
-        for(GridViewData object : objects){
-            mAdapter.add(object);
-        }
+        //for(GridViewData object : objects){
+        //   mAdapter.add(object);
+        //}
 
         mGridView.setAdapter(mAdapter);
         mGridView.setOnScrollListener(this);
@@ -136,21 +132,26 @@ public class StaggeredGridFragment extends Fragment
 
 
     @Override
-    public Loader<ArrayList<GridViewData>> onCreateLoader(int id, Bundle args) {
-        return mLoader = new CatalogueDataLoader(getActivity());
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CatalogueDataLoader(
+                getActivity(),
+                CatalogueData.Designers.CONTENT_URI,
+                DESIGNERS_COLUNMS,
+                null,
+                null,
+                null);
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<GridViewData>> loader, ArrayList<GridViewData> data) {
-        for (GridViewData d : data){
-            mAdapter.add(d);
-        }
-        objects.addAll(data);
-        mAdapter.notifyDataSetChanged();
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        this.c = data;
+        mAdapter.swapCursor(data);
+        //Toast.makeText(getActivity(),""+data.getCount(),Toast.LENGTH_LONG).show();
+        //mAdapter.swapCursor(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<GridViewData>> loader) {
-
+    public void onLoaderReset(Loader<Cursor> loader) {
+        //mAdapter.swapCursor(data);
     }
 }

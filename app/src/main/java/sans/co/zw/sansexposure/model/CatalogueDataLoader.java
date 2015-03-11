@@ -3,7 +3,9 @@ package sans.co.zw.sansexposure.model;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.CursorLoader;
 
 import java.util.ArrayList;
 
@@ -12,8 +14,38 @@ import sans.co.zw.sansexposure.R;
 /**
  * Created by Steve on 08/03/2015.
  */
-public class CatalogueDataLoader extends AsyncTaskLoader<ArrayList<GridViewData>> {
+public class CatalogueDataLoader extends CursorLoader {
 
+    private Cursor c;
+
+    public CatalogueDataLoader(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        super(context, uri, projection, selection, selectionArgs, sortOrder);
+    }
+
+    @Override
+    protected void onStartLoading() {
+        forceLoad();
+        super.onStartLoading();
+    }
+
+    @Override
+    public Cursor loadInBackground() {
+        this.c = getContext().getContentResolver().query(
+                getUri(),
+                getProjection(),
+                getSelection(),
+                getSelectionArgs(),
+                getSortOrder()
+        );
+      return c;
+    }
+
+    @Override
+    public void deliverResult(Cursor cursor) {
+        super.deliverResult(cursor);
+    }
+
+    /*
     ArrayList<GridViewData> objects = new ArrayList<GridViewData>();
 
 
@@ -103,4 +135,5 @@ public class CatalogueDataLoader extends AsyncTaskLoader<ArrayList<GridViewData>
     public void deliverResult(ArrayList<GridViewData> data) {
         super.deliverResult(data);
     }
+    */
 }

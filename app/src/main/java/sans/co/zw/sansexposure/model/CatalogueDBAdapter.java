@@ -41,18 +41,6 @@ public class CatalogueDBAdapter {
                 db.execSQL(CatalogueData.CREATE_STOCK_IMAGES_TABLE);
                 db.execSQL(CatalogueData.CREATE_STOCKS_TABLE);
                 db.execSQL(CatalogueData.CREATE_COLLECTIONS);
-
-                /*
-                db.execSQL(CatalogueData.Designers.STATEMENT_INSERT+CatalogueData.Designers.ROW_1);
-                db.execSQL(CatalogueData.Designers.STATEMENT_INSERT+CatalogueData.Designers.ROW_2);
-
-                db.execSQL(CatalogueData.Collections.STATEMENT_INSERT+CatalogueData.Collections.ROW_1);
-                db.execSQL(CatalogueData.Collections.STATEMENT_INSERT+CatalogueData.Collections.ROW_2);
-                db.execSQL(CatalogueData.Collections.STATEMENT_INSERT+CatalogueData.Collections.ROW_3);
-                db.execSQL(CatalogueData.Collections.STATEMENT_INSERT+CatalogueData.Collections.ROW_4);
-                db.execSQL(CatalogueData.Collections.STATEMENT_INSERT+CatalogueData.Collections.ROW_5);
-                db.execSQL(CatalogueData.Collections.STATEMENT_INSERT+CatalogueData.Collections.ROW_6);
-                */
             } catch (SQLException e) {
                 Log.e("DB", "create error: \n" + e);
             }

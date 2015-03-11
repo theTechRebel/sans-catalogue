@@ -36,7 +36,7 @@ public class StaggeredGridAdapter extends ArrayAdapter<Object>{
     private final LayoutInflater mLayoutIflater;
 
     public StaggeredGridAdapter(final Context ctx, final int textViewResourceId){
-        super(ctx, textViewResourceId);
+            super(ctx, textViewResourceId);
         mLayoutIflater = LayoutInflater.from(ctx);
     }
 

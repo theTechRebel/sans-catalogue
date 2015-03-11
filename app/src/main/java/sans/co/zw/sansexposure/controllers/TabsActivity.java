@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.model.CatalogueData;
+import sans.co.zw.sansexposure.view.DesignersStaggeredGridFragment;
 import sans.co.zw.sansexposure.view.StaggeredGridFragment;
 
 
@@ -89,7 +90,7 @@ public class TabsActivity extends ActionBarActivity implements
         mViewPager.setCurrentItem(tab.getPosition());
         switch(tab.getPosition()){
             case 0:
-                c =  getDataFromProvider(CatalogueData.Designers.CONTENT_URI);
+                //c =  getDataFromProvider(CatalogueData.Designers.CONTENT_URI);
                 break;
             case 1:
 
@@ -98,8 +99,8 @@ public class TabsActivity extends ActionBarActivity implements
 
                 break;
         }
-        Toast.makeText(this, "" + c.getCount(), Toast.LENGTH_LONG).show();
-        c.close();
+        //Toast.makeText(this, "" + c.getCount(), Toast.LENGTH_LONG).show();
+        //c.close();
     }
 
     @Override
@@ -155,13 +156,13 @@ class myFragmentStateAdapter extends FragmentPagerAdapter{
         Fragment f = null;
         switch(position){
             case 0:
-                f = new StaggeredGridFragment();
+                f = new DesignersStaggeredGridFragment();
                 break;
             case 1:
-                f = new StaggeredGridFragment();
+                f = new DesignersStaggeredGridFragment();
                 break;
             case 2:
-                f = new StaggeredGridFragment();
+                f = new DesignersStaggeredGridFragment();
                 break;
         }
         return f;

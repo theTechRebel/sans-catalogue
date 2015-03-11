@@ -19,7 +19,7 @@ public class CatalogueData{
     public static final String CONTENT_AUTHORITY = "sans.co.zw.sansexposure.model.CatalogueDataProvider";
 
     public static final String DATABASE_NAME = "sans_catalogue";
-    public static final int DATABASE_VERSION = 32;
+    public static final int DATABASE_VERSION = 39;
 
     public static final class Designers{
         public static final String TABLE_NAME = "designers";
@@ -44,12 +44,19 @@ public class CatalogueData{
             return java.util.Collections.unmodifiableMap(result);
         }
 
-        public static final String COL_ID = "_ID";
+        public static final String COL_ID = "_id";
         public static final String COL_DESIGNER = "designer";
         public static final String COL_FULLNAME = "full_name";
         public static final String COL_LABEL = "label";
         public static final String COL_BIO = "bio";
         public static final String COL_PIC = "pic";
+
+        public static final int CURSOR_COL_DESIGNER_ID = 0;
+        public static final int CURSOR_COL_DESIGNER = 1;
+        public static final int CURSOR_COL_DESIGNER_LABEL = 2;
+        public static final int CURSOR_COL_DESIGNER_FULLNAME = 3;
+        public static final int CURSOR_COL_DESIGNER_BIO = 4;
+        public static final int CURSOR_COL_DESIGNER_PIC = 5;
     }
 
     public static final class Collections{
@@ -91,7 +98,7 @@ public class CatalogueData{
 
     //create table statements
     public static final String CREATE_DESIGNERS_TABLE = "CREATE TABLE IF NOT EXISTS `designers` (\n" +
-            "  `_ID` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+            "  `_id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
             "  `designer` VARCHAR(255),\n" +
             "  `label` VARCHAR(256),\n" +
             "  `full_name` VARCHAR(255),\n" +
@@ -99,7 +106,7 @@ public class CatalogueData{
             "  `pic` VARCHAR(255) \n" +
             ");";
     public static final String CREATE_STOCKS_TABLE = "CREATE TABLE IF NOT EXISTS `stocks` (\n" +
-            "  `_ID` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+            "  `_id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
             "  `code` VARCHAR(255),\n" +
             "  `pic` VARCHAR(255),\n" +
             "  `price` VARCHAR(255),\n" +
@@ -112,13 +119,13 @@ public class CatalogueData{
             "  `description` VARCHAR(255) \n" +
             ");";
     public static final String CREATE_STOCK_IMAGES_TABLE = "CREATE TABLE IF NOT EXISTS `stock_images` (\n" +
-            "  `_ID` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+            "  `_id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
             "  `designer` VARCHAR(255),\n" +
             "  `location` VARCHAR(255),\n" +
             "  `stock_item` VARCHAR(255) \n" +
             ");";
     public static final String CREATE_COLLECTIONS = "CREATE TABLE IF NOT EXISTS `collections` (\n" +
-            "  `_ID` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+            "  `_id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
             "  `collection_name` VARCHAR(255)\n" +
             ");";
 }
