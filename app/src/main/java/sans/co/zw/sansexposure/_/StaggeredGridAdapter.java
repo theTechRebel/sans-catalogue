@@ -1,27 +1,21 @@
-package sans.co.zw.sansexposure.view;
+package sans.co.zw.sansexposure._;
 
 import android.content.Context;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.etsy.android.grid.util.DynamicHeightImageView;
 import com.etsy.android.grid.util.DynamicHeightTextView;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import sans.co.zw.sansexposure.R;
-import sans.co.zw.sansexposure.model.GridViewData;
 
 /**
  * Created by Steve on 26/02/2015.
  */
+
+/*
 public class StaggeredGridAdapter extends ArrayAdapter<Object>{
 
     private static final String TAG = "StaggeredGridViewAdapter";
@@ -44,7 +38,7 @@ public class StaggeredGridAdapter extends ArrayAdapter<Object>{
     public View getView(final int position, View convertView,final ViewGroup parent) {
         ViewHolder vh;
         if(convertView == null){
-            convertView = mLayoutIflater.inflate(R.layout.grid_item_listitem, parent, false);
+            convertView = mLayoutIflater.inflate(R.layout._grid_item_listitem, parent, false);
             vh = new ViewHolder();
             vh.txtItemName      = (DynamicHeightTextView) convertView.findViewById(R.id.txt_line1);
             vh.txtItemDesigner  = (DynamicHeightTextView) convertView.findViewById(R.id.txt_designer);
@@ -66,3 +60,4 @@ public class StaggeredGridAdapter extends ArrayAdapter<Object>{
         return convertView;
     }
 }
+*/

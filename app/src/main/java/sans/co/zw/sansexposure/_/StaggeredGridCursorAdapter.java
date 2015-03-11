@@ -1,9 +1,8 @@
-package sans.co.zw.sansexposure.view;
+package sans.co.zw.sansexposure._;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +13,12 @@ import com.etsy.android.grid.util.DynamicHeightTextView;
 
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.model.CatalogueData;
-import sans.co.zw.sansexposure.model.GridViewData;
 
 /**
  * Created by Steve on 09/03/2015.
  */
+
+/*
 public class StaggeredGridCursorAdapter extends CursorAdapter {
     private LayoutInflater cursorInflater;
     private int textViewResourceId;
@@ -51,7 +51,7 @@ public class StaggeredGridCursorAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         Log.d("db",""+textViewResourceId);
-        return cursorInflater.inflate(R.layout.grid_item_listitem, parent, false);
+        return cursorInflater.inflate(R.layout._grid_item_listitem, parent, false);
     }
 
     @Override
@@ -71,3 +71,4 @@ public class StaggeredGridCursorAdapter extends CursorAdapter {
         vh.imgItem.setImageResource(R.drawable.sample_3);
     }
 }
+*/

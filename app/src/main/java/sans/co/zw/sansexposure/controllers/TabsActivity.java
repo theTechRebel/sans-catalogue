@@ -14,7 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import sans.co.zw.sansexposure.R;
-import sans.co.zw.sansexposure.view.DesignersStaggeredGridFragment;
+import sans.co.zw.sansexposure.view.CategoriesFragment;
+import sans.co.zw.sansexposure.view.DesignersFragment;
 
 
 public class TabsActivity extends ActionBarActivity implements
@@ -152,13 +153,13 @@ class TabsFragmentPagerAdapter extends FragmentPagerAdapter{
         Fragment f = null;
         switch(position){
             case 0:
-                f = new DesignersStaggeredGridFragment();
+                f = new DesignersFragment();
                 break;
             case 1:
-                f = new DesignersStaggeredGridFragment();
+                f = new CategoriesFragment();
                 break;
             case 2:
-                f = new DesignersStaggeredGridFragment();
+                f = new DesignersFragment();
                 break;
         }
         return f;

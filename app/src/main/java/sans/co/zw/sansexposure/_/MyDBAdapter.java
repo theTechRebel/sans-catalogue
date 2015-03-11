@@ -1,4 +1,4 @@
-package sans.co.zw.sansexposure.src;
+package sans.co.zw.sansexposure._;
 
 import android.content.ContentValues;
 import android.content.Context;

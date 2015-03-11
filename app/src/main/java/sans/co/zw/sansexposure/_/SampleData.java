@@ -1,8 +1,7 @@
-package sans.co.zw.sansexposure.src;
+package sans.co.zw.sansexposure._;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Steve on 26/02/2015.

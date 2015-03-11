@@ -1,8 +1,6 @@
-package sans.co.zw.sansexposure.model;
+package sans.co.zw.sansexposure._;
 
 import java.util.ArrayList;
-
-import sans.co.zw.sansexposure.R;
 
 /**
  * Created by Steve on 02/03/2015.
@@ -51,6 +49,7 @@ public class GridViewData {
         final ArrayList<GridViewData> data = new ArrayList<GridViewData>();
 
         int[] pics = {
+                /*
                 R.drawable.sample_2, R.drawable.sample_3,
                 R.drawable.sample_4, R.drawable.sample_5,
                 R.drawable.sample_6, R.drawable.sample_7,
@@ -62,6 +61,7 @@ public class GridViewData {
                 R.drawable.sample_2, R.drawable.sample_3,
                 R.drawable.sample_4, R.drawable.sample_5,
                 R.drawable.sample_6, R.drawable.sample_7
+                */
         };
 
         // references to images text

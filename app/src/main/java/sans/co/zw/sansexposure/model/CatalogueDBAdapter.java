@@ -1,13 +1,10 @@
 package sans.co.zw.sansexposure.model;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import sans.co.zw.sansexposure.src.Message;
 
 /**
  * Created by Steve on 22/02/2015.
@@ -38,9 +35,10 @@ public class CatalogueDBAdapter {
         public void onCreate(SQLiteDatabase db) {
             try {
                 db.execSQL(CatalogueData.CREATE_DESIGNERS_TABLE);
-                db.execSQL(CatalogueData.CREATE_STOCK_IMAGES_TABLE);
+                db.execSQL(CatalogueData.CREATE_CATEGORIES_TABLE);
                 db.execSQL(CatalogueData.CREATE_STOCKS_TABLE);
-                db.execSQL(CatalogueData.CREATE_COLLECTIONS);
+                db.execSQL(CatalogueData.CREATE_STOCK_IMAGES_TABLE);
+
             } catch (SQLException e) {
                 Log.e("DB", "create error: \n" + e);
             }
@@ -49,10 +47,11 @@ public class CatalogueDBAdapter {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             try {
-                db.execSQL(CatalogueData.DROP_TABLE_COLLECTIONS);
                 db.execSQL(CatalogueData.DROP_TABLE_DESIGNERS);
-                db.execSQL(CatalogueData.DROP_TABLE_STOCK_IMAGES);
+                db.execSQL(CatalogueData.DROP_TABLE_CATEGORIES);
                 db.execSQL(CatalogueData.DROP_TABLE_STOCKS);
+                db.execSQL(CatalogueData.DROP_TABLE_STOCK_IMAGES);
+
                 onCreate(db);
             } catch (SQLException e) {
                 Log.e("DB", "upgrade error: \n" + e);

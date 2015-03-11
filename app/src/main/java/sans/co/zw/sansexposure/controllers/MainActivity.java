@@ -48,6 +48,7 @@ public class MainActivity extends ActionBarActivity implements Router {
         }
 
         save(CatalogueData.Designers.CONTENT_URI);
+        save(CatalogueData.Categories.CONTENT_URI);
     }
 
 
@@ -97,6 +98,10 @@ public class MainActivity extends ActionBarActivity implements Router {
             pics = CatalogueData.Designers.PICS;
         }
 
+        if(contentUri == CatalogueData.Categories.CONTENT_URI){
+            pics = CatalogueData.Categories.PICS;
+        }
+
         for(int i=0;i<pics.length;i++){
             Bitmap img = BitmapFactory.decodeResource(getResources(),pics[i]);
             Uri file = saveImageToInternalStorage(img, pics[i]+".png");
@@ -126,6 +131,13 @@ public class MainActivity extends ActionBarActivity implements Router {
             values.put(CatalogueData.Designers.COL_LABEL, data[1]);
             values.put(CatalogueData.Designers.COL_FULLNAME, data[2]);
             values.put(CatalogueData.Designers.COL_PIC, imageLocation.toString());
+        }
+
+        if(contentUri == CatalogueData.Categories.CONTENT_URI){
+            String[] data = CatalogueData.Categories.DB_DATA.get(i);
+            values.put(CatalogueData.Categories.COL_KEY, data[0]);
+            values.put(CatalogueData.Categories.COL_VALUE, data[1]);
+            values.put(CatalogueData.Categories.COL_PIC, imageLocation.toString());
         }
 
         Uri returnUri = getContentResolver().insert(contentUri,values);

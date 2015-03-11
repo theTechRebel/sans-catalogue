@@ -1,4 +1,4 @@
-package sans.co.zw.sansexposure.src;
+package sans.co.zw.sansexposure._;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import sans.co.zw.sansexposure.R;
 
+/*
 public class GridViewFragment extends Fragment {
 
     private ArrayAdapter<String> mArrayAdapter;
@@ -44,6 +45,7 @@ public class GridViewFragment extends Fragment {
 
         // references to our images
          int[] pics = {
+                 /*
                 R.drawable.sample_2, R.drawable.sample_3,
                 R.drawable.sample_4, R.drawable.sample_5,
                 R.drawable.sample_6, R.drawable.sample_7,
@@ -55,6 +57,7 @@ public class GridViewFragment extends Fragment {
                 R.drawable.sample_2, R.drawable.sample_3,
                 R.drawable.sample_4, R.drawable.sample_5,
                 R.drawable.sample_6, R.drawable.sample_7
+
         };
 
         // references to images text
@@ -112,16 +115,16 @@ public class GridViewFragment extends Fragment {
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (convertView == null) {  // if it's not recycled, initialize some attributes
                 grid = new View(ctx);
-                grid = inflater.inflate(R.layout._gridview_listitem, null);
-                textView = (TextView)grid.findViewById(R.id.grid_text);
-                imageView = (ImageView)grid.findViewById(R.id.grid_image);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                //grid = inflater.inflate(R.layout._gridview_listitem, null);
+                //textView = (TextView)grid.findViewById(R.id.grid_text);
+                //imageView = (ImageView)grid.findViewById(R.id.grid_image);
+                //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                textView.setText(text[position]);
-                imageView.setImageResource(imageID[position]);
+                //textView.setText(text[position]);
+                //imageView.setImageResource(imageID[position]);
 
-                grid.setLayoutParams(new GridView.LayoutParams(110, 110));
-                grid.setPadding(1, 1, 1, 1);
+                //grid.setLayoutParams(new GridView.LayoutParams(110, 110));
+                //grid.setPadding(1, 1, 1, 1);
             } else {
                 grid = (View) convertView;
             }
@@ -129,3 +132,4 @@ public class GridViewFragment extends Fragment {
         }
     }
 }
+*/

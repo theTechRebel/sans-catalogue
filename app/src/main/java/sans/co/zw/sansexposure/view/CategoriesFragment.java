@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -22,38 +21,32 @@ import com.etsy.android.grid.StaggeredGridView;
 import com.etsy.android.grid.util.DynamicHeightImageView;
 import com.etsy.android.grid.util.DynamicHeightTextView;
 
-import java.io.File;
-
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.model.CatalogueData;
 import sans.co.zw.sansexposure.model.CatalogueDataLoader;
 
 /**
- * Created by Steve on 09/03/2015.
+ * Created by Steve on 11/03/2015.
  */
-
-//The Fragment to handle Designers data
-public class DesignersStaggeredGridFragment extends Fragment
+public class CategoriesFragment extends Fragment
     implements
         AbsListView.OnScrollListener,
         AbsListView.OnItemClickListener,
         LoaderManager.LoaderCallbacks<Cursor>{
 
-    private static final String TAG = "DesignersGridFragment";
+    private static final String TAG = "CategoriesFragment";
 
-    private static final int DESIGNERS_LOADER = 0;
+    private static final int CATEGORIES_LOADER = 1;
 
-    private static final String[] DESIGNERS_COLUNMS = {
-            CatalogueData.Designers.TABLE_NAME+"."+CatalogueData.Designers.COL_ID,
-            CatalogueData.Designers.COL_DESIGNER,
-            CatalogueData.Designers.COL_LABEL,
-            CatalogueData.Designers.COL_FULLNAME,
-            CatalogueData.Designers.COL_BIO,
-            CatalogueData.Designers.COL_PIC
+    private static final String[] CATEGORIES_COLUNMS = {
+            CatalogueData.Categories.TABLE_NAME+"."+CatalogueData.Categories.COL_ID,
+            CatalogueData.Categories.COL_KEY,
+            CatalogueData.Categories.COL_VALUE,
+            CatalogueData.Categories.COL_PIC
     };
 
     private StaggeredGridView mGridView;
-    private DesignersCursorAdapter mAdapter;
+    private CategoriesCursorAdapter mAdapter;
     private CatalogueDataLoader mLoader;
     private boolean mLoadMoreData;
     private Cursor c;
@@ -73,7 +66,7 @@ public class DesignersStaggeredGridFragment extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getLoaderManager().initLoader(DESIGNERS_LOADER,null,this);
+        getLoaderManager().initLoader(CATEGORIES_LOADER, null, this);
 
         mGridView = (StaggeredGridView)getView().findViewById(R.id.grid_view);
 
@@ -81,12 +74,12 @@ public class DesignersStaggeredGridFragment extends Fragment
             final LayoutInflater layoutInflater = getActivity().getLayoutInflater();
             View header = layoutInflater.inflate(R.layout.grid_layout_header_footer, null);
             TextView txtHeaderTitle = (TextView) header.findViewById(R.id.txt_title);
-            txtHeaderTitle.setText("SANS Exposure Designers");
+            txtHeaderTitle.setText("SANS Exposure Categories");
             mGridView.addHeaderView(header);
         }
 
         if(mAdapter == null){
-            mAdapter = new DesignersCursorAdapter(
+            mAdapter = new CategoriesCursorAdapter(
                     getActivity(),
                     c,
                     false);
@@ -102,8 +95,8 @@ public class DesignersStaggeredGridFragment extends Fragment
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CatalogueDataLoader(
                 getActivity(),
-                CatalogueData.Designers.CONTENT_URI,
-                DESIGNERS_COLUNMS,
+                CatalogueData.Categories.CONTENT_URI,
+                CATEGORIES_COLUNMS,
                 null,
                 null,
                 null);
@@ -138,24 +131,23 @@ public class DesignersStaggeredGridFragment extends Fragment
             int lastInScreen = firstVisibleItem + visibleItemCount;
             if(lastInScreen >= totalItemCount){
                 mLoadMoreData = true;
-                getLoaderManager().restartLoader(DESIGNERS_LOADER,null,this);
+                getLoaderManager().restartLoader(CATEGORIES_LOADER,null,this);
                 mLoadMoreData = false;
             }
         }
     }
 }
 
-class DesignersCursorAdapter extends CursorAdapter{
+class CategoriesCursorAdapter extends CursorAdapter {
     private LayoutInflater cursorInflater;
     private int textViewResourceId;
 
     static class ViewHolder{
-        DynamicHeightTextView designerLabel;
-        DynamicHeightTextView designerName;
-        DynamicHeightImageView designerImage;
+        DynamicHeightTextView categoryValue;
+        DynamicHeightImageView categoryImage;
     }
 
-    public DesignersCursorAdapter(Context context, Cursor c, boolean autoRequery) {
+    public CategoriesCursorAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
         cursorInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -168,7 +160,7 @@ class DesignersCursorAdapter extends CursorAdapter{
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return cursorInflater.inflate(
-                R.layout.grid_item_designers,
+                R.layout.grid_item_categories,
                 parent,
                 false
         );
@@ -180,14 +172,12 @@ class DesignersCursorAdapter extends CursorAdapter{
         vh = new ViewHolder();
 
 
-        vh.designerLabel    = (DynamicHeightTextView)view.findViewById(R.id.txt_designer_label);
-        vh.designerName     = (DynamicHeightTextView)view.findViewById(R.id.txt_designer_name);
-        vh.designerImage    = (DynamicHeightImageView)view.findViewById(R.id.image_designer);
+        vh.categoryValue    = (DynamicHeightTextView)view.findViewById(R.id.txt_category_value);
+        vh.categoryImage     = (DynamicHeightImageView)view.findViewById(R.id.image_category);
 
-        vh.designerLabel.setText(cursor.getString(cursor.getColumnIndex(CatalogueData.Designers.COL_LABEL)));
-        vh.designerName.setText(cursor.getString(cursor.getColumnIndex(CatalogueData.Designers.COL_FULLNAME)));
-        String imageUriAsString = cursor.getString(cursor.getColumnIndex(CatalogueData.Designers.COL_PIC));
+        vh.categoryValue.setText(cursor.getString(CatalogueData.Categories.CURSOR_COL_CATEGORY_VALUE));
+        String imageUriAsString = cursor.getString(CatalogueData.Categories.CURSOR_COL_CATEGORY_PIC);
         Uri theUri = Uri.parse(imageUriAsString);
-        vh.designerImage.setImageURI(theUri);
+        vh.categoryImage.setImageURI(theUri);
     }
 }

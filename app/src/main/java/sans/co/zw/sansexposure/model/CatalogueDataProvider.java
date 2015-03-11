@@ -8,11 +8,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
-
-import java.net.URI;
-
-import sans.co.zw.sansexposure.src.Message;
 
 /**
  * Created by Steve on 24/02/2015.
@@ -35,8 +30,8 @@ public class CatalogueDataProvider extends ContentProvider {
         matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Designers.TABLE_NAME, DESIGNERS_ALL_RECORDS);
         matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Designers.TABLE_NAME+"/#", DESIGNERS_ONE_RECORD);
 
-        matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Collections.TABLE_NAME, COLLECTIONS_ALL_RECORDS);
-        matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Collections.TABLE_NAME+"/#",COLLECTIONS_ONE_RECORD);
+        matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Categories.TABLE_NAME, COLLECTIONS_ALL_RECORDS);
+        matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Categories.TABLE_NAME+"/#",COLLECTIONS_ONE_RECORD);
 
         return matcher;
     }
@@ -59,10 +54,10 @@ public class CatalogueDataProvider extends ContentProvider {
                 return CatalogueData.Designers.CONTENT_ITEM_TYPE;
 
             case COLLECTIONS_ALL_RECORDS:
-                return CatalogueData.Collections.CONTENT_ALL_TYPE;
+                return CatalogueData.Categories.CONTENT_ALL_TYPE;
 
             case COLLECTIONS_ONE_RECORD:
-                return CatalogueData.Collections.CONTENT_ITEM_TYPE;
+                return CatalogueData.Categories.CONTENT_ITEM_TYPE;
 
             default:
                 throw new UnsupportedOperationException("404 URI Not Found: "+ uri);
@@ -100,7 +95,7 @@ public class CatalogueDataProvider extends ContentProvider {
 
             case COLLECTIONS_ALL_RECORDS:
                 c = db.query(
-                        CatalogueData.Collections.TABLE_NAME,
+                        CatalogueData.Categories.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,
@@ -112,9 +107,9 @@ public class CatalogueDataProvider extends ContentProvider {
 
             case COLLECTIONS_ONE_RECORD:
                 c = db.query(
-                        CatalogueData.Collections.TABLE_NAME,
+                        CatalogueData.Categories.TABLE_NAME,
                         projection,
-                        CatalogueData.Collections.COL_ID +"="+ ContentUris.parseId(uri),
+                        CatalogueData.Categories.COL_ID +"="+ ContentUris.parseId(uri),
                         selectionArgs,
                         null,
                         null,
@@ -148,11 +143,11 @@ public class CatalogueDataProvider extends ContentProvider {
                 break;
 
             case COLLECTIONS_ALL_RECORDS:
-                _id = db.insert(CatalogueData.Collections.TABLE_NAME,
+                _id = db.insert(CatalogueData.Categories.TABLE_NAME,
                         null,
                         values);
                 if(_id > 0){
-                    returnUri = CatalogueData.Collections.buildUri(_id);
+                    returnUri = CatalogueData.Categories.buildUri(_id);
                 }else{
                     throw new SQLException("Failed to insert row into: "+ uri);
                 }

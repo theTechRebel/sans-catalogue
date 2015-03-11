@@ -1,14 +1,10 @@
-package sans.co.zw.sansexposure.view;
+package sans.co.zw.sansexposure._;
 
-import android.content.AsyncTaskLoader;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +20,12 @@ import java.util.ArrayList;
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.model.CatalogueData;
 import sans.co.zw.sansexposure.model.CatalogueDataLoader;
-import sans.co.zw.sansexposure.model.GridViewData;
 
 /**
  * Created by Steve on 26/02/2015.
  */
+
+/*
 public class StaggeredGridFragment extends Fragment
     implements
         AbsListView.OnScrollListener,
@@ -155,3 +152,4 @@ public class StaggeredGridFragment extends Fragment
         //mAdapter.swapCursor(data);
     }
 }
+*/
