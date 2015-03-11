@@ -6,19 +6,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import sans.co.zw.sansexposure.R;
-import sans.co.zw.sansexposure.model.CatalogueData;
 import sans.co.zw.sansexposure.view.DesignersStaggeredGridFragment;
-import sans.co.zw.sansexposure.view.StaggeredGridFragment;
 
 
 public class TabsActivity extends ActionBarActivity implements
@@ -36,7 +32,7 @@ public class TabsActivity extends ActionBarActivity implements
         setContentView(R.layout.activity_tabs);
 
         mViewPager = (ViewPager)findViewById(R.id.pager);
-        mViewPager.setAdapter(new myFragmentStateAdapter(getSupportFragmentManager()));
+        mViewPager.setAdapter(new TabsFragmentPagerAdapter(getSupportFragmentManager()));
         mViewPager.setOnPageChangeListener(this);
 
         actionBar = getSupportActionBar();
@@ -143,11 +139,11 @@ public class TabsActivity extends ActionBarActivity implements
 }
 
 
-class myFragmentStateAdapter extends FragmentPagerAdapter{
+class TabsFragmentPagerAdapter extends FragmentPagerAdapter{
     //implements FragmentPagerAdapter to retain each fragment in memory even when the user changes fragments
     //implements FragmentStatePagerAdapter to destroy fragments that the user is not currently using
     //but be ale to save certain state and restore that state when the use returns to the fragment
-    public myFragmentStateAdapter(FragmentManager fm){
+    public TabsFragmentPagerAdapter(FragmentManager fm){
         super(fm);
     }
 
