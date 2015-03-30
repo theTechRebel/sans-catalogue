@@ -49,6 +49,7 @@ public class MainActivity extends ActionBarActivity implements Router {
 
         save(CatalogueData.Designers.CONTENT_URI);
         save(CatalogueData.Categories.CONTENT_URI);
+        save(CatalogueData.Stocks.CONTENT_URI);
     }
 
 
@@ -102,6 +103,10 @@ public class MainActivity extends ActionBarActivity implements Router {
             pics = CatalogueData.Categories.PICS;
         }
 
+        if(contentUri == CatalogueData.Stocks.CONTENT_URI){
+            pics = CatalogueData.Stocks.PICS;
+        }
+
         for(int i=0;i<pics.length;i++){
             Bitmap img = BitmapFactory.decodeResource(getResources(),pics[i]);
             Uri file = saveImageToInternalStorage(img, pics[i]+".png");
@@ -138,6 +143,16 @@ public class MainActivity extends ActionBarActivity implements Router {
             values.put(CatalogueData.Categories.COL_KEY, data[0]);
             values.put(CatalogueData.Categories.COL_VALUE, data[1]);
             values.put(CatalogueData.Categories.COL_PIC, imageLocation.toString());
+        }
+
+        if(contentUri == CatalogueData.Stocks.CONTENT_URI){
+            String[] data = CatalogueData.Stocks.DB_DATA.get(i);
+            values.put(CatalogueData.Stocks.COL_CODE, data[0]);
+            values.put(CatalogueData.Stocks.COL_PRICE, data[1]);
+            values.put(CatalogueData.Stocks.COL_DESIGNER, data[4]);
+            values.put(CatalogueData.Stocks.COL_SEX, data[5]);
+            values.put(CatalogueData.Stocks.COL_ITEM_NAME, data[6]);
+            values.put(CatalogueData.Stocks.COL_COLLECTION, data[7]);
         }
 
         Uri returnUri = getContentResolver().insert(contentUri,values);

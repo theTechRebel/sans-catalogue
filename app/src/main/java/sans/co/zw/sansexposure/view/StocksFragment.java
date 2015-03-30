@@ -26,27 +26,28 @@ import sans.co.zw.sansexposure.model.CatalogueData;
 import sans.co.zw.sansexposure.model.CatalogueDataLoader;
 
 /**
- * Created by Steve on 11/03/2015.
+ * Created by Steve on 29/03/2015.
  */
-public class CategoriesFragment extends Fragment
-    implements
+public class StocksFragment  extends Fragment
+        implements
         AbsListView.OnScrollListener,
         AbsListView.OnItemClickListener,
         LoaderManager.LoaderCallbacks<Cursor>{
 
-    private static final String TAG = "CategoriesFragment";
+    private static final String TAG = "StocksFragment";
 
-    private static final int CATEGORIES_LOADER = 1;
+    private static final int STOCKS_LOADER = 1;
 
-    private static final String[] CATEGORIES_COLUNMS = {
-            CatalogueData.Categories.TABLE_NAME+"."+CatalogueData.Categories.COL_ID,
-            CatalogueData.Categories.COL_KEY,
-            CatalogueData.Categories.COL_VALUE,
-            CatalogueData.Categories.COL_PIC
+    private static final String[] STOCKS_COLUNMS = {
+            CatalogueData.Stocks.TABLE_NAME+"."+CatalogueData.Stocks.COL_ID,
+            CatalogueData.Stocks.COL_PRICE,
+            CatalogueData.Stocks.COL_DESIGNER,
+            CatalogueData.Stocks.COL_ITEM_NAME,
+            CatalogueData.Stocks.COL_PIC
     };
 
     private StaggeredGridView mGridView;
-    private CategoriesCursorAdapter mAdapter;
+    private StocksCursorAdapter mAdapter;
     private CatalogueDataLoader mLoader;
     private boolean mLoadMoreData;
     private Cursor c;
@@ -66,7 +67,7 @@ public class CategoriesFragment extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getLoaderManager().initLoader(CATEGORIES_LOADER, null, this);
+        getLoaderManager().initLoader(STOCKS_LOADER, null, this);
 
         mGridView = (StaggeredGridView)getView().findViewById(R.id.grid_view);
 
@@ -74,29 +75,27 @@ public class CategoriesFragment extends Fragment
             final LayoutInflater layoutInflater = getActivity().getLayoutInflater();
             View header = layoutInflater.inflate(R.layout.grid_layout_header_footer, null);
             TextView txtHeaderTitle = (TextView) header.findViewById(R.id.txt_title);
-            txtHeaderTitle.setText("SANS Exposure Categories");
+            txtHeaderTitle.setText("SANS Exposure Catalogue");
             mGridView.addHeaderView(header);
         }
 
         if(mAdapter == null){
-            mAdapter = new CategoriesCursorAdapter(
+            mAdapter = new StocksCursorAdapter(
                     getActivity(),
                     c,
                     false);
         }
-
         mGridView.setAdapter(mAdapter);
         mGridView.setOnScrollListener(this);
         mGridView.setOnItemClickListener(this);
     }
 
-    //Cursor Loader Methods
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CatalogueDataLoader(
                 getActivity(),
-                CatalogueData.Categories.CONTENT_URI,
-                CATEGORIES_COLUNMS,
+                CatalogueData.Stocks.CONTENT_URI,
+                STOCKS_COLUNMS,
                 null,
                 null,
                 null);
@@ -110,9 +109,9 @@ public class CategoriesFragment extends Fragment
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+
         //mAdapter.swapCursor(data);
     }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -125,30 +124,29 @@ public class CategoriesFragment extends Fragment
     }
 
     @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
-                         int totalItemCount) {
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         //handling requests
         if(!mLoadMoreData){
             int lastInScreen = firstVisibleItem + visibleItemCount;
             if(lastInScreen >= totalItemCount){
                 mLoadMoreData = true;
-                getLoaderManager().restartLoader(CATEGORIES_LOADER,null,this);
+                getLoaderManager().restartLoader(STOCKS_LOADER,null,this);
                 mLoadMoreData = false;
             }
         }
     }
 }
 
-class CategoriesCursorAdapter extends CursorAdapter {
+class StocksCursorAdapter extends CursorAdapter{
+
     private LayoutInflater cursorInflater;
-    private int textViewResourceId;
 
     static class ViewHolder{
-        DynamicHeightTextView categoryValue;
-        DynamicHeightImageView categoryImage;
+        DynamicHeightImageView stockItemImage;
+        DynamicHeightTextView stockItemPrice, stockItemName, stockItemdesigner;
     }
 
-    public CategoriesCursorAdapter(Context context, Cursor c, boolean autoRequery) {
+    StocksCursorAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
         cursorInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -161,7 +159,7 @@ class CategoriesCursorAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return cursorInflater.inflate(
-                R.layout.grid_item_categories,
+                R.layout.grid_item_stocks,
                 parent,
                 false
         );
@@ -172,13 +170,16 @@ class CategoriesCursorAdapter extends CursorAdapter {
         ViewHolder vh;
         vh = new ViewHolder();
 
+        vh.stockItemImage = (DynamicHeightImageView)view.findViewById(R.id.image_stock);
+        vh.stockItemdesigner = (DynamicHeightTextView)view.findViewById(R.id.txt_designer_label);
+        vh.stockItemPrice = (DynamicHeightTextView)view.findViewById(R.id.txt_item_price);
+        vh.stockItemName = (DynamicHeightTextView)view.findViewById(R.id.txt_item_name);
 
-        vh.categoryValue    = (DynamicHeightTextView)view.findViewById(R.id.txt_category_value);
-        vh.categoryImage     = (DynamicHeightImageView)view.findViewById(R.id.image_category);
-
-        vh.categoryValue.setText(cursor.getString(CatalogueData.Categories.CURSOR_COL_CATEGORY_VALUE));
-        String imageUriAsString = cursor.getString(CatalogueData.Categories.CURSOR_COL_CATEGORY_PIC);
+        vh.stockItemdesigner.setText(cursor.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_DESEIGNER));
+        vh.stockItemPrice.setText(cursor.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_PRICE));
+        vh.stockItemName.setText(cursor.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_ITEM_NAME));
+        String imageUriAsString = cursor.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_PIC);
         Uri theUri = Uri.parse(imageUriAsString);
-        vh.categoryImage.setImageURI(theUri);
+        vh.stockItemImage.setImageURI(theUri);
     }
 }

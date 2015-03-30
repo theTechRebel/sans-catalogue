@@ -13,12 +13,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <com.etsy.android.grid.util.DynamicHeightImageView
-            android:id="@+id/image_category"
+            android:id="@+id/image_stock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@+id/image_1"
             android:scaleType="centerCrop" />
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_below="@+id/image"
@@ -26,11 +27,33 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <com.etsy.android.grid.util.DynamicHeightTextView
-            android:layout_gravity="center_horizontal"
             android:textSize="14sp"
-            android:id="@+id/txt_category_value"
+            android:id="@+id/txt_item_name"
             android:textColor="@color/green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-    </LinearLayout>
+        </LinearLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/price_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.etsy.android.grid.util.DynamicHeightTextView
+            android:layout_alignParentLeft="true"
+            android:textSize="13sp"
+            android:id="@+id/txt_item_designer"
+            android:textColor="@color/green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <com.etsy.android.grid.util.DynamicHeightTextView
+            android:layout_alignParentRight="true"
+            android:textSize="13sp"
+            android:id="@+id/txt_item_price"
+            android:textColor="@color/green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+
 </RelativeLayout>
