@@ -1,12 +1,12 @@
 package sans.co.zw.sansexposure.controllers;
 
-import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
@@ -16,27 +16,24 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 
+import sans.co.zw.sansexposure.helpers.StatusBarNotification;
+import sans.co.zw.sansexposure.helpers.Router;
 import sans.co.zw.sansexposure.R;
-import sans.co.zw.sansexposure.model.CatalogueDBAdapter;
 import sans.co.zw.sansexposure.model.CatalogueData;
-import sans.co.zw.sansexposure.model.CatalogueDataProvider;
 import sans.co.zw.sansexposure.view.MainFragment;
-
-import com.etsy.android.grid.StaggeredGridView;
 
 public class MainActivity extends ActionBarActivity implements Router {
 
     ActionBar actionBar;
     final static String APP_PATH_SD_CARD = "/catalogue/";
     File file = null;
+    private static String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +44,16 @@ public class MainActivity extends ActionBarActivity implements Router {
             swapFragments(0);
         }
 
-        save(CatalogueData.Designers.CONTENT_URI);
-        save(CatalogueData.Categories.CONTENT_URI);
-        save(CatalogueData.Stocks.CONTENT_URI);
+        new HandleDataBaseOperations(getApplicationContext()).execute(
+                CatalogueData.Designers.CONTENT_URI,
+                CatalogueData.Categories.CONTENT_URI,
+                CatalogueData.Stocks.CONTENT_URI
+        );
+
+        //save(CatalogueData.Designers.CONTENT_URI);
+        //save(CatalogueData.Categories.CONTENT_URI);
+        //save(CatalogueData.Stocks.CONTENT_URI);
+
     }
 
 
@@ -149,13 +153,18 @@ public class MainActivity extends ActionBarActivity implements Router {
             String[] data = CatalogueData.Stocks.DB_DATA.get(i);
             values.put(CatalogueData.Stocks.COL_CODE, data[0]);
             values.put(CatalogueData.Stocks.COL_PRICE, data[1]);
+            values.put(CatalogueData.Stocks.COL_SIZE, data[2]);
+            values.put(CatalogueData.Stocks.COL_QUANTITY, data[3]);
             values.put(CatalogueData.Stocks.COL_DESIGNER, data[4]);
             values.put(CatalogueData.Stocks.COL_SEX, data[5]);
             values.put(CatalogueData.Stocks.COL_ITEM_NAME, data[6]);
             values.put(CatalogueData.Stocks.COL_COLLECTION, data[7]);
+            values.put(CatalogueData.Stocks.COL_DESCRIPTION, data[8]);
+            values.put(CatalogueData.Stocks.COL_PIC, imageLocation.toString());
         }
 
-        Uri returnUri = getContentResolver().insert(contentUri,values);
+        getContentResolver().insert(contentUri,values);
+        //Uri returnUri = getContentResolver().insert(contentUri,values);
         //long id = ContentUris.parseId(returnUri);
         //Toast.makeText(this,"Created Image: "+imageLocation.toString(),Toast.LENGTH_LONG).show();
     }
@@ -187,5 +196,44 @@ public class MainActivity extends ActionBarActivity implements Router {
         }
     }
 
+    //AsyncTask to handle database population
+    private class HandleDataBaseOperations extends AsyncTask<Uri, Integer, Boolean>{
+
+        private StatusBarNotification mStatusBarNotification;
+        private Context ctx;
+
+        private HandleDataBaseOperations(Context ctx) {
+            this.ctx = ctx;
+            mStatusBarNotification = new StatusBarNotification(ctx);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            mStatusBarNotification.createNotification();
+        }
+
+        @Override
+        protected Boolean doInBackground(Uri... params) {
+            int i = 0;
+            for(Uri uri : params){
+                save(uri);
+                i++;
+                publishProgress((int) ((i/3) * 100));
+
+                if(isCancelled()) return false;
+            }
+            return true;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+            mStatusBarNotification.progressUpdate(progress[0]);
+        }
+
+        protected void onPostExecute(Boolean result) {
+            mStatusBarNotification.completed();
+        }
+    }
 
 }
+
+

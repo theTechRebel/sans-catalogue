@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import sans.co.zw.sansexposure.R;
-import sans.co.zw.sansexposure.controllers.Router;
+import sans.co.zw.sansexposure.helpers.Router;
 
 /**
  * Created by Steve on 20/02/2015.

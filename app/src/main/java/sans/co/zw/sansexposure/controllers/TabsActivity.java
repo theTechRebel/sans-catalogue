@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.view.CategoriesFragment;
 import sans.co.zw.sansexposure.view.DesignersFragment;
+import sans.co.zw.sansexposure.view.StocksFragment;
 
 
 public class TabsActivity extends ActionBarActivity implements
@@ -159,7 +160,8 @@ class TabsFragmentPagerAdapter extends FragmentPagerAdapter{
                 f = new CategoriesFragment();
                 break;
             case 2:
-                f = new DesignersFragment();
+                f = new StocksFragment();
+                //f = new CategoriesFragment();
                 break;
         }
         return f;

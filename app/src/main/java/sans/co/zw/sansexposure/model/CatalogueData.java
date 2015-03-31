@@ -19,7 +19,7 @@ public class CatalogueData{
     public static final String CONTENT_AUTHORITY = "sans.co.zw.sansexposure.model.CatalogueDataProvider";
 
     public static final String DATABASE_NAME = "sans_catalogue";
-    public static final int DATABASE_VERSION = 46;
+    public static final int DATABASE_VERSION = 1;
 
     public static final class Designers{
         public static final String TABLE_NAME = "designers";
@@ -114,39 +114,39 @@ public class CatalogueData{
             return ContentUris.withAppendedId(CONTENT_URI,id);
         }
 
-        public static final String[] ROW_0 = {"batikhaze1","30","0","0","Alternative_Tapfuma_Munenge","1","Batik Haze","Shirts",""};
-        public static final String[] ROW_1 = {"butterflyeffect1","30","0","0","Alternative_Tapfuma_Munenge","1","Butterfly Effect","Shirts",""};
-        public static final String[] ROW_2 = {"cee001","35","0","0","Lady_Cee_Kay","1","African Shirt","african_shirts",""};
-        public static final String[] ROW_3 = {"cee002","30","0","0","Lady_Cee_Kay","1","African Shirt","african_shirts",""};
-        public static final String[] ROW_4 = {"cee003","30","0","0","Lady_Cee_Kay","1","African Shirt","african_shirts",""};
-        public static final String[] ROW_5 = {"cee004","25","0","0","Lady_Cee_Kay","1","African Shirt","african_shirts",""};
-        public static final String[] ROW_6 = {"cee005","30","0","0","Lady_Cee_Kay","0","Dangaree","dangarees",""};
-        public static final String[] ROW_7 = {"cee006","45","0","0","Lady_Cee_Kay","0","African Dress","dresses",""};
-        public static final String[] ROW_8 = {"cee007","45","0","0","Lady_Cee_Kay","0","African Dress","dresses",""};
-        public static final String[] ROW_9 = {"cee008","45","0","0","Lady_Cee_Kay","0","African Outfit","dresses",""};
-        public static final String[] ROW_10 = {"cee009","30","0","0","Lady_Cee_Kay","0","Cocktail Dress","dresses",""};
-        public static final String[] ROW_11 = {"cee010","45","0","0","Lady_Cee_Kay","0","Dashik Dress","dresses",""};
-        public static final String[] ROW_12 = {"cee011","45","0","0","Lady_Cee_Kay","0","Dashiki Dress","dresses",""};
-        public static final String[] ROW_13 = {"cee012","25","0","0","Lady_Cee_Kay","0","Maxxi Dress","dresses",""};
-        public static final String[] ROW_14 = {"cee013","25","0","0","Lady_Cee_Kay","0","African Shorts","shorts",""};
-        public static final String[] ROW_15 = {"cee014","25","0","0","Lady_Cee_Kay","0","Stretchy Dress","dresses",""};
-        public static final String[] ROW_16 = {"cee015","20","0","0","Lady_Cee_Kay","0","Chiffon Top","skirts_and_tops",""};
-        public static final String[] ROW_17 = {"cee016","25","0","0","Lady_Cee_Kay","0","Peplum Top","skirts_and_tops",""};
-        public static final String[] ROW_18 = {"cee017","25","0","0","Lady_Cee_Kay","0","Peplum Top","skirts_and_tops",""};
-        public static final String[] ROW_19 = {"cee018","45","0","0","Lady_Cee_Kay","0","Peplum top and pencil skirt","skirts_and_tops",""};
-        public static final String[] ROW_20 = {"cee019","40","0","0","Lady_Cee_Kay","0","Shatter skirt and Croptop","skirts_and_tops",""};
-        public static final String[] ROW_21 = {"cee020","25","0","0","Lady_Cee_Kay","0","Skatter Skirt","skirts_and_tops",""};
-        public static final String[] ROW_22 = {"cee21","25","0","0","Lady_Cee_Kay","0","Skatter Skirt","skirts_and_tops",""};
-        public static final String[] ROW_23 = {"cee22","35","0","0","Lady_Cee_Kay","0","Skatter Skirt and Crop Top","skirts_and_tops",""};
-        public static final String[] ROW_24 = {"cee23","25","0","0","Lady_Cee_Kay","0","African Shorts","shorts",""};
-        public static final String[] ROW_25 = {"darkfantasy1","30","0","0","Alternative_Tapfuma_Munenge","1","Dark Fantasy","Shirts",""};
-        public static final String[] ROW_26 = {"dreamland1","40","0","0","Alternative_Tapfuma_Munenge","1","Dreamland","Shirts",""};
-        public static final String[] ROW_27 = {"savagegarden1","30","0","0","Alternative_Tapfuma_Munenge","1","Savage Garden","Shirts",""};
-        public static final String[] ROW_28 = {"thebestseller","30","0","0","Alternative_Tapfuma_Munenge","1","The Best Seller","Shirts",""};
+        public static final String[] ROW_0 = {"batikhaze1","30","0","0","Alternative_Tapfuma_Munenge","1","Batik Haze","Shirts","N/A"};
+        public static final String[] ROW_1 = {"butterflyeffect1","30","0","0","Alternative_Tapfuma_Munenge","1","Butterfly Effect","Shirts","N/A"};
+        public static final String[] ROW_2 = {"cee001","35","0","0","Lady_Cee_Kay","1","African Shirt","african_shirts","N/A"};
+        public static final String[] ROW_3 = {"cee002","30","0","0","Lady_Cee_Kay","1","African Shirt","african_shirts","N/A"};
+        public static final String[] ROW_4 = {"cee003","30","0","0","Lady_Cee_Kay","1","African Shirt","african_shirts","N/A"};
+        public static final String[] ROW_5 = {"cee004","25","0","0","Lady_Cee_Kay","1","African Shirt","african_shirts","N/A"};
+        public static final String[] ROW_6 = {"cee005","30","0","0","Lady_Cee_Kay","0","Dangaree","dangarees","N/A"};
+        public static final String[] ROW_7 = {"cee006","45","0","0","Lady_Cee_Kay","0","African Dress","dresses","N/A"};
+        public static final String[] ROW_8 = {"cee007","45","0","0","Lady_Cee_Kay","0","African Dress","dresses","N/A"};
+        public static final String[] ROW_9 = {"cee008","45","0","0","Lady_Cee_Kay","0","African Outfit","dresses","N/A"};
+        public static final String[] ROW_10 = {"cee009","30","0","0","Lady_Cee_Kay","0","Cocktail Dress","dresses","N/A"};
+        public static final String[] ROW_11 = {"cee010","45","0","0","Lady_Cee_Kay","0","Dashik Dress","dresses","N/A"};
+        public static final String[] ROW_12 = {"cee011","45","0","0","Lady_Cee_Kay","0","Dashiki Dress","dresses","N/A"};
+        public static final String[] ROW_13 = {"cee012","25","0","0","Lady_Cee_Kay","0","Maxxi Dress","dresses","N/A"};
+        public static final String[] ROW_14 = {"cee013","25","0","0","Lady_Cee_Kay","0","African Shorts","shorts","N/A"};
+        public static final String[] ROW_15 = {"cee014","25","0","0","Lady_Cee_Kay","0","Stretchy Dress","dresses","N/A"};
+        public static final String[] ROW_16 = {"cee015","20","0","0","Lady_Cee_Kay","0","Chiffon Top","skirts_and_tops","N/A"};
+        public static final String[] ROW_17 = {"cee016","25","0","0","Lady_Cee_Kay","0","Peplum Top","skirts_and_tops","N/A"};
+        public static final String[] ROW_18 = {"cee017","25","0","0","Lady_Cee_Kay","0","Peplum Top","skirts_and_tops","N/A"};
+        public static final String[] ROW_19 = {"cee018","45","0","0","Lady_Cee_Kay","0","Peplum top and pencil skirt","skirts_and_tops","N/A"};
+        public static final String[] ROW_20 = {"cee019","40","0","0","Lady_Cee_Kay","0","Shatter skirt and Croptop","skirts_and_tops","N/A"};
+        public static final String[] ROW_21 = {"cee020","25","0","0","Lady_Cee_Kay","0","Skatter Skirt","skirts_and_tops","N/A"};
+        public static final String[] ROW_22 = {"cee21","25","0","0","Lady_Cee_Kay","0","Skatter Skirt","skirts_and_tops","N/A"};
+        public static final String[] ROW_23 = {"cee22","35","0","0","Lady_Cee_Kay","0","Skatter Skirt and Crop Top","skirts_and_tops","N/A"};
+        public static final String[] ROW_24 = {"cee23","25","0","0","Lady_Cee_Kay","0","African Shorts","shorts","N/A"};
+        public static final String[] ROW_25 = {"darkfantasy1","30","0","0","Alternative_Tapfuma_Munenge","1","Dark Fantasy","Shirts","N/A"};
+        public static final String[] ROW_26 = {"dreamland1","40","0","0","Alternative_Tapfuma_Munenge","1","Dreamland","Shirts","N/A"};
+        public static final String[] ROW_27 = {"savagegarden1","30","0","0","Alternative_Tapfuma_Munenge","1","Savage Garden","Shirts","N/A"};
+        public static final String[] ROW_28 = {"thebestseller","30","0","0","Alternative_Tapfuma_Munenge","1","The Best Seller","Shirts","N/A"};
 
         public static final int[] PICS   = {R.drawable.batikhaze,R.drawable.butterflyeffect,R.drawable.african_shirt,R.drawable.cee002,
                                             R.drawable.cee003,R.drawable.cee004,R.drawable.dangaree,R.drawable.cee006,R.drawable.cee007,R.drawable.cee008,
-                                            R.drawable.cee008,R.drawable.dresses,R.drawable.cee010,R.drawable.cee011,R.drawable.cee012,R.drawable.cee013,
+                                            R.drawable.dresses,R.drawable.cee010,R.drawable.cee011,R.drawable.cee012,R.drawable.cee013,
                                             R.drawable.cee014,R.drawable.cee015,R.drawable.cee016,R.drawable.cee017,R.drawable.cee018,R.drawable.cee019,
                                             R.drawable.cee020,R.drawable.skirts_and_tops,R.drawable.cee22,R.drawable.shorts,R.drawable.darkfantasy,R.drawable.dreamland,
                                             R.drawable.savagegarden,R.drawable.shirts};
@@ -189,21 +189,24 @@ public class CatalogueData{
         public static final String COL_ID = "_id";
         public static final String COL_CODE = "code";
         public static final String COL_PRICE = "price";
+        public static final String COL_SIZE = "size";
+        public static final String COL_QUANTITY = "quantity";
         public static final String COL_DESIGNER = "designer";
         public static final String COL_SEX = "sex";
         public static final String COL_ITEM_NAME = "item_name";
         public static final String COL_COLLECTION = "collection";
+        public static final String COL_DESCRIPTION = "description";
         public static final String COL_PIC = "pic";
 
 
         public static final int CURSOR_COL_STOCKS_ID = 0;
         public static final int CURSOR_COL_STOCKS_CODE = 1;
-        public static final int CURSOR_COL_STOCKS_COLLECTION = 2;
-        public static final int CURSOR_COL_STOCKS_PRICE = 3;
-        public static final int CURSOR_COL_STOCKS_DESEIGNER = 4;
-        public static final int CURSOR_COL_STOCKS_SEX = 5;
-        public static final int CURSOR_COL_STOCKS_ITEM_NAME = 6;
-        public static final int CURSOR_COL_STOCKS_PIC = 7;
+        public static final int CURSOR_COL_STOCKS_PRICE = 2;
+        public static final int CURSOR_COL_STOCKS_DESIGNER = 5;
+        public static final int CURSOR_COL_STOCKS_SEX = 6;
+        public static final int CURSOR_COL_STOCKS_ITEM_NAME = 7;
+        public static final int CURSOR_COL_STOCKS_COLLECTION = 8;
+        public static final int CURSOR_COL_STOCKS_PIC = 10;
     }
 
     public static final class StockImages{
@@ -240,11 +243,11 @@ public class CatalogueData{
             "  `size` VARCHAR(255),\n" +
             "  `quantity` VARCHAR(255),\n" +
             "  `designer` VARCHAR(255),\n" +
-            "  `sex` INTEGER,\n" +
+            "  `sex` VARCHAR(255),\n" +
             "  `item_name` VARCHAR(255),\n" +
             "  `collection` VARCHAR(255),\n" +
-            "  `description` VARCHAR(255) \n" +
-            "  `pic` VARCHAR(255),\n" +
+            "  `description` VARCHAR(255), \n" +
+            "  `pic` VARCHAR(255)\n" +
             ");";
     public static final String CREATE_STOCK_IMAGES_TABLE = "CREATE TABLE IF NOT EXISTS `stock_images` (\n" +
             "  `_id` INTEGER PRIMARY KEY AUTOINCREMENT,\n" +

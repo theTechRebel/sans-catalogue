@@ -22,6 +22,9 @@ public class CatalogueDataProvider extends ContentProvider {
     public final static int COLLECTIONS_ALL_RECORDS = 200;
     public final static int COLLECTIONS_ONE_RECORD = 201;
 
+    public final static int STOCKS_ALL_RECORDS = 300;
+    public final static int STOCKS_ONE_RECORD = 301;
+
     private static final UriMatcher uriMatcher = buildUriMatcher();
 
     private final static UriMatcher buildUriMatcher(){
@@ -32,6 +35,9 @@ public class CatalogueDataProvider extends ContentProvider {
 
         matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Categories.TABLE_NAME, COLLECTIONS_ALL_RECORDS);
         matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Categories.TABLE_NAME+"/#",COLLECTIONS_ONE_RECORD);
+
+        matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Stocks.TABLE_NAME, STOCKS_ALL_RECORDS);
+        matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Stocks.TABLE_NAME+"/#", STOCKS_ONE_RECORD);
 
         return matcher;
     }
@@ -58,6 +64,12 @@ public class CatalogueDataProvider extends ContentProvider {
 
             case COLLECTIONS_ONE_RECORD:
                 return CatalogueData.Categories.CONTENT_ITEM_TYPE;
+
+            case STOCKS_ALL_RECORDS:
+                return CatalogueData.Stocks.CONTENT_ALL_TYPE;
+
+            case STOCKS_ONE_RECORD:
+                return CatalogueData.Stocks.CONTENT_ITEM_TYPE;
 
             default:
                 throw new UnsupportedOperationException("404 URI Not Found: "+ uri);
@@ -117,6 +129,30 @@ public class CatalogueDataProvider extends ContentProvider {
                 );
                 break;
 
+            case STOCKS_ALL_RECORDS:
+                c = db.query(
+                        CatalogueData.Stocks.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+
+            case STOCKS_ONE_RECORD:
+                c = db.query(
+                        CatalogueData.Stocks.TABLE_NAME,
+                        projection,
+                        CatalogueData.Stocks.COL_ID +"="+ ContentUris.parseId(uri),
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+
             default:
                 throw new UnsupportedOperationException("404 URI Not Found: "+ uri);
         }
@@ -148,6 +184,17 @@ public class CatalogueDataProvider extends ContentProvider {
                         values);
                 if(_id > 0){
                     returnUri = CatalogueData.Categories.buildUri(_id);
+                }else{
+                    throw new SQLException("Failed to insert row into: "+ uri);
+                }
+                break;
+
+            case STOCKS_ALL_RECORDS:
+                _id = db.insert(CatalogueData.Stocks.TABLE_NAME,
+                        null,
+                        values);
+                if(_id > 0){
+                    returnUri = CatalogueData.Stocks.buildUri(_id);
                 }else{
                     throw new SQLException("Failed to insert row into: "+ uri);
                 }

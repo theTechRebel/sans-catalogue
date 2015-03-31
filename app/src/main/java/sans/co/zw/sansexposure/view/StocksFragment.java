@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 import com.etsy.android.grid.StaggeredGridView;
 import com.etsy.android.grid.util.DynamicHeightImageView;
 import com.etsy.android.grid.util.DynamicHeightTextView;
+
+import java.text.NumberFormat;
 
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.model.CatalogueData;
@@ -40,9 +43,15 @@ public class StocksFragment  extends Fragment
 
     private static final String[] STOCKS_COLUNMS = {
             CatalogueData.Stocks.TABLE_NAME+"."+CatalogueData.Stocks.COL_ID,
+            CatalogueData.Stocks.COL_CODE,
             CatalogueData.Stocks.COL_PRICE,
+            CatalogueData.Stocks.COL_SIZE,
+            CatalogueData.Stocks.COL_QUANTITY,
             CatalogueData.Stocks.COL_DESIGNER,
+            CatalogueData.Stocks.COL_SEX,
             CatalogueData.Stocks.COL_ITEM_NAME,
+            CatalogueData.Stocks.COL_COLLECTION,
+            CatalogueData.Stocks.COL_DESCRIPTION,
             CatalogueData.Stocks.COL_PIC
     };
 
@@ -75,7 +84,7 @@ public class StocksFragment  extends Fragment
             final LayoutInflater layoutInflater = getActivity().getLayoutInflater();
             View header = layoutInflater.inflate(R.layout.grid_layout_header_footer, null);
             TextView txtHeaderTitle = (TextView) header.findViewById(R.id.txt_title);
-            txtHeaderTitle.setText("SANS Exposure Catalogue");
+            txtHeaderTitle.setText("SANS Exposure Catalogue Items");
             mGridView.addHeaderView(header);
         }
 
@@ -83,7 +92,7 @@ public class StocksFragment  extends Fragment
             mAdapter = new StocksCursorAdapter(
                     getActivity(),
                     c,
-                    false);
+                    true);
         }
         mGridView.setAdapter(mAdapter);
         mGridView.setOnScrollListener(this);
@@ -143,7 +152,7 @@ class StocksCursorAdapter extends CursorAdapter{
 
     static class ViewHolder{
         DynamicHeightImageView stockItemImage;
-        DynamicHeightTextView stockItemPrice, stockItemName, stockItemdesigner;
+        DynamicHeightTextView stockItemPrice, stockItemName, stockItemDesigner;
     }
 
     StocksCursorAdapter(Context context, Cursor c, boolean autoRequery) {
@@ -171,13 +180,13 @@ class StocksCursorAdapter extends CursorAdapter{
         vh = new ViewHolder();
 
         vh.stockItemImage = (DynamicHeightImageView)view.findViewById(R.id.image_stock);
-        vh.stockItemdesigner = (DynamicHeightTextView)view.findViewById(R.id.txt_designer_label);
+        vh.stockItemDesigner = (DynamicHeightTextView)view.findViewById(R.id.txt_item_designer);
         vh.stockItemPrice = (DynamicHeightTextView)view.findViewById(R.id.txt_item_price);
         vh.stockItemName = (DynamicHeightTextView)view.findViewById(R.id.txt_item_name);
 
-        vh.stockItemdesigner.setText(cursor.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_DESEIGNER));
-        vh.stockItemPrice.setText(cursor.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_PRICE));
+        vh.stockItemPrice.setText("$"+cursor.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_PRICE)+".oo");
         vh.stockItemName.setText(cursor.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_ITEM_NAME));
+        vh.stockItemDesigner.setText(cursor.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_DESIGNER).replaceAll("_", " "));
         String imageUriAsString = cursor.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_PIC);
         Uri theUri = Uri.parse(imageUriAsString);
         vh.stockItemImage.setImageURI(theUri);
