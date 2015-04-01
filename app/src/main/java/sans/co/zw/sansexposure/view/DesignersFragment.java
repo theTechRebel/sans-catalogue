@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -150,9 +151,8 @@ class DesignersCursorAdapter extends CursorAdapter{
     private int textViewResourceId;
 
     static class ViewHolder{
-        DynamicHeightTextView designerLabel;
-        DynamicHeightTextView designerName;
-        DynamicHeightImageView designerImage;
+        TextView designerLabel;
+        ImageView designerImage;
     }
 
     public DesignersCursorAdapter(Context context, Cursor c, boolean autoRequery) {
@@ -180,12 +180,10 @@ class DesignersCursorAdapter extends CursorAdapter{
         vh = new ViewHolder();
 
 
-        vh.designerLabel    = (DynamicHeightTextView)view.findViewById(R.id.txt_designer_label);
-        vh.designerName     = (DynamicHeightTextView)view.findViewById(R.id.txt_designer_name);
-        vh.designerImage    = (DynamicHeightImageView)view.findViewById(R.id.image_designer);
+        vh.designerLabel    = (TextView)view.findViewById(R.id.txt_designer_label);
+        vh.designerImage    = (ImageView)view.findViewById(R.id.image_designer);
 
         vh.designerLabel.setText(cursor.getString(CatalogueData.Designers.CURSOR_COL_DESIGNER_LABEL));
-        vh.designerName.setText(cursor.getString(CatalogueData.Designers.CURSOR_COL_DESIGNER_FULLNAME));
         String imageUriAsString = cursor.getString(CatalogueData.Designers.CURSOR_COL_DESIGNER_PIC);
         Uri theUri = Uri.parse(imageUriAsString);
         vh.designerImage.setImageURI(theUri);

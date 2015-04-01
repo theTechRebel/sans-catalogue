@@ -19,7 +19,7 @@ public class CatalogueData{
     public static final String CONTENT_AUTHORITY = "sans.co.zw.sansexposure.model.CatalogueDataProvider";
 
     public static final String DATABASE_NAME = "sans_catalogue";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 4;
 
     public static final class Designers{
         public static final String TABLE_NAME = "designers";

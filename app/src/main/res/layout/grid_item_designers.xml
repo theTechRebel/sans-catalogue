@@ -1,43 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/panel_content"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
-    android:padding="0dp"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:id="@+id/image"
+    android:layout_height="match_parent">
+    <sans.co.zw.sansexposure.helpers.SquareImageView
+        android:id="@+id/image_designer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <com.etsy.android.grid.util.DynamicHeightImageView
-            android:id="@+id/image_designer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@+id/image_1"
-            android:scaleType="centerCrop" />
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        />
 
-    <LinearLayout
-        android:layout_below="@+id/image"
+    <TextView
+        android:id="@+id/txt_designer_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-            <com.etsy.android.grid.util.DynamicHeightTextView
-                android:layout_gravity="center_horizontal"
-                android:textSize="14sp"
-                android:id="@+id/txt_designer_name"
-                android:textColor="@color/green"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <com.etsy.android.grid.util.DynamicHeightTextView
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/txt_designer_label"
-                android:textSize="12sp"
-                android:textColor="@color/green"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-</RelativeLayout>
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_gravity="bottom"
+        android:textColor="@android:color/white"
+        android:background="#55000000"
+        />
+</FrameLayout>

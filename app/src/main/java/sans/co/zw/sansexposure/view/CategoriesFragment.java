@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -146,8 +147,8 @@ class CategoriesCursorAdapter extends CursorAdapter {
     private int textViewResourceId;
 
     static class ViewHolder{
-        DynamicHeightTextView categoryValue;
-        DynamicHeightImageView categoryImage;
+        TextView categoryValue;
+        ImageView categoryImage;
     }
 
     public CategoriesCursorAdapter(Context context, Cursor c, boolean autoRequery) {
@@ -175,8 +176,8 @@ class CategoriesCursorAdapter extends CursorAdapter {
         vh = new ViewHolder();
 
 
-        vh.categoryValue    = (DynamicHeightTextView)view.findViewById(R.id.txt_category_value);
-        vh.categoryImage     = (DynamicHeightImageView)view.findViewById(R.id.image_category);
+        vh.categoryValue    = (TextView)view.findViewById(R.id.txt_category_value);
+        vh.categoryImage     = (ImageView)view.findViewById(R.id.image_category);
 
         vh.categoryValue.setText(cursor.getString(CatalogueData.Categories.CURSOR_COL_CATEGORY_VALUE));
         String imageUriAsString = cursor.getString(CatalogueData.Categories.CURSOR_COL_CATEGORY_PIC);
