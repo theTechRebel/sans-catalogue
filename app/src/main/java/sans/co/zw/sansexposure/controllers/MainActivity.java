@@ -25,12 +25,14 @@ import java.io.OutputStream;
 import sans.co.zw.sansexposure.helpers.StatusBarNotification;
 import sans.co.zw.sansexposure.helpers.Router;
 import sans.co.zw.sansexposure.R;
+import sans.co.zw.sansexposure.helpers.UserPreferences;
 import sans.co.zw.sansexposure.model.CatalogueData;
 import sans.co.zw.sansexposure.view.MainFragment;
 
 public class MainActivity extends ActionBarActivity implements Router {
 
     ActionBar actionBar;
+    UserPreferences userPrefs;
     final static String APP_PATH_SD_CARD = "/catalogue/";
     File file = null;
     private static String TAG = "MainActivity";
@@ -39,21 +41,24 @@ public class MainActivity extends ActionBarActivity implements Router {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userPrefs = new UserPreferences(getApplicationContext());
 
         if (savedInstanceState == null) {
-            swapFragments(0);
+            if(userPrefs.getEmailAddress() == "empty" && userPrefs.getPassword() == "empty"){
+                swapFragments(0);
+            }else{
+                launchTabsAcitivity();
+            }
         }
 
-        new HandleDataBaseOperations(getApplicationContext()).execute(
-                CatalogueData.Designers.CONTENT_URI,
-                CatalogueData.Categories.CONTENT_URI,
-                CatalogueData.Stocks.CONTENT_URI
-        );
-
-        //save(CatalogueData.Designers.CONTENT_URI);
-        //save(CatalogueData.Categories.CONTENT_URI);
-        //save(CatalogueData.Stocks.CONTENT_URI);
-
+        if(userPrefs.getDatabaseCreated() == false){
+            new HandleDataBaseOperations(getApplicationContext()).execute(
+                    CatalogueData.Designers.CONTENT_URI,
+                    CatalogueData.Categories.CONTENT_URI,
+                    CatalogueData.Stocks.CONTENT_URI
+            );
+            userPrefs.setDatabaseCreated(true);
+        }
     }
 
 
