@@ -31,13 +31,13 @@ public class StatusBarNotification {
         mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         //create the notification
-        int icon = android.R.drawable.stat_sys_download;
+        int icon = android.R.drawable.stat_notify_sync;
         CharSequence tickerText = mContext.getString(R.string.download_ticker); //Initial text that appears in the status bar
         long when = System.currentTimeMillis();
         mNotification = new Notification(icon, tickerText, when);
 
         //create the content which is shown in the notification pulldown
-        mContentTitle = mContext.getString(R.string.content_title); //Full title of the notification in the pull down
+        mContentTitle = mContext.getString(R.string.download_ticker); //Full title of the notification in the pull down
         CharSequence contentText = "0% complete"; //Text of the notification in the pull down
 
         //you have to set a PendingIntent on a notification to tell the system what you want it to do when the notification is selected

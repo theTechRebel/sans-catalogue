@@ -1,5 +1,6 @@
 package sans.co.zw.sansexposure.controllers;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,12 +39,17 @@ public class MainActivity extends ActionBarActivity implements Router {
     final static String APP_PATH_SD_CARD = "/catalogue/";
     File file = null;
     private static String TAG = "MainActivity";
+    private ProgressBar spinner;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         userPrefs = new UserPreferences(getApplicationContext());
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.GONE);
 
         if (savedInstanceState == null) {
             if(userPrefs.getEmailAddress() == "empty" && userPrefs.getPassword() == "empty"){
@@ -214,7 +222,9 @@ public class MainActivity extends ActionBarActivity implements Router {
 
         @Override
         protected void onPreExecute() {
+
             mStatusBarNotification.createNotification();
+            spinner.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -222,8 +232,8 @@ public class MainActivity extends ActionBarActivity implements Router {
             int i = 0;
             for(Uri uri : params){
                 save(uri);
-                i++;
-                publishProgress((int) ((i/3) * 100));
+                i = i + 30;
+                publishProgress(i);
 
                 if(isCancelled()) return false;
             }
@@ -236,6 +246,7 @@ public class MainActivity extends ActionBarActivity implements Router {
 
         protected void onPostExecute(Boolean result) {
             mStatusBarNotification.completed();
+        spinner.setVisibility(View.GONE);
         }
     }
 
