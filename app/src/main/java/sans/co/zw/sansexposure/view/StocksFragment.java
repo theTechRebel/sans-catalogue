@@ -55,6 +55,13 @@ public class StocksFragment  extends Fragment
             CatalogueData.Stocks.COL_PIC
     };
 
+    private static final String[] STOCK_IMAGES_COLUNMS = {
+            CatalogueData.StockImages.TABLE_NAME+"."+CatalogueData.StockImages.COL_ID,
+            CatalogueData.StockImages.COL_DESIGNER,
+            CatalogueData.StockImages.COL_LOCATION,
+            CatalogueData.StockImages.COL_STOCK_ITEM
+    };
+
     private StaggeredGridView mGridView;
     private StocksCursorAdapter mAdapter;
     private CatalogueDataLoader mLoader;
@@ -114,6 +121,7 @@ public class StocksFragment  extends Fragment
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         this.c = data;
         mAdapter.swapCursor(data);
+
     }
 
     @Override
@@ -124,7 +132,48 @@ public class StocksFragment  extends Fragment
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getActivity(), "Item Clicked: " + position, Toast.LENGTH_LONG).show();
+        this.c.moveToPosition(position-1);
+
+        //get the code of the clicked item
+        String code = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_CODE);
+
+        // Constructs a selection clause that matches the desired clicked item.
+        String mSelectionClause = CatalogueData.StockImages.COL_STOCK_ITEM + " = ?";
+
+        // Moves the user's input string to the selection arguments.
+        String[] mSelectionArgs = new String[]{ code };
+
+        Cursor cursor = getActivity().getContentResolver().query(
+                CatalogueData.StockImages.CONTENT_URI,  // The content URI of the words table
+                STOCK_IMAGES_COLUNMS,                   // The columns to return for each row
+                mSelectionClause,                       // Either null, or the desired related items
+                mSelectionArgs,                         // Either empty, or the desired related items
+                null);
+
+        // Some providers return null if an error occurs, others throw an exception
+        if (null == cursor) {
+            // Insert code here to handle the error.
+            Toast.makeText(getActivity(),
+                    "an error occurred with the provider",
+                    Toast.LENGTH_SHORT).show();
+        } else if (cursor.getCount() < 1) {
+            // If the Cursor is empty, the provider found no matches
+            Toast.makeText(getActivity(),
+                    "No Data Found",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            // Insert code here to do something with the results
+            cursor.moveToFirst();
+            while (cursor.isAfterLast() == false) {
+                Toast.makeText(getActivity(),
+                        cursor.getString(CatalogueData.StockImages.CURSOR_COL_STOCK_IMAGES_STOCK_ITEM),
+                        Toast.LENGTH_SHORT).show();
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+
+
     }
 
     @Override
