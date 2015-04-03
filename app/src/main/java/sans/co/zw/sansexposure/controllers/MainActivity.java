@@ -63,7 +63,8 @@ public class MainActivity extends ActionBarActivity implements Router {
             new HandleDataBaseOperations(getApplicationContext()).execute(
                     CatalogueData.Designers.CONTENT_URI,
                     CatalogueData.Categories.CONTENT_URI,
-                    CatalogueData.Stocks.CONTENT_URI
+                    CatalogueData.Stocks.CONTENT_URI,
+                    CatalogueData.StockImages.CONTENT_URI
             );
             userPrefs.setDatabaseCreated(true);
         }
@@ -124,6 +125,10 @@ public class MainActivity extends ActionBarActivity implements Router {
             pics = CatalogueData.Stocks.PICS;
         }
 
+        if(contentUri == CatalogueData.StockImages.CONTENT_URI){
+            pics = CatalogueData.StockImages.PICS;
+        }
+
         for(int i=0;i<pics.length;i++){
             Bitmap img = BitmapFactory.decodeResource(getResources(),pics[i]);
             Uri file = saveImageToInternalStorage(img, pics[i]+".png");
@@ -175,6 +180,14 @@ public class MainActivity extends ActionBarActivity implements Router {
             values.put(CatalogueData.Stocks.COL_DESCRIPTION, data[8]);
             values.put(CatalogueData.Stocks.COL_PIC, imageLocation.toString());
         }
+
+        if(contentUri == CatalogueData.StockImages.CONTENT_URI){
+            String[] data = CatalogueData.StockImages.DB_DATA.get(i);
+            values.put(CatalogueData.StockImages.COL_DESIGNER, data[0]);
+            values.put(CatalogueData.StockImages.COL_STOCK_ITEM, data[1]);
+            values.put(CatalogueData.StockImages.COL_LOCATION, imageLocation.toString());
+        }
+
 
         getContentResolver().insert(contentUri,values);
         //Uri returnUri = getContentResolver().insert(contentUri,values);
@@ -232,7 +245,7 @@ public class MainActivity extends ActionBarActivity implements Router {
             int i = 0;
             for(Uri uri : params){
                 save(uri);
-                i = i + 30;
+                i = i + 20;
                 publishProgress(i);
 
                 if(isCancelled()) return false;

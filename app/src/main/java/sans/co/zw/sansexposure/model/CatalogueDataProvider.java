@@ -25,6 +25,9 @@ public class CatalogueDataProvider extends ContentProvider {
     public final static int STOCKS_ALL_RECORDS = 300;
     public final static int STOCKS_ONE_RECORD = 301;
 
+    public final static int STOCK_IMAGES_ALL_RECORDS = 400;
+    public final static int STOCK_IMAGES_ONE_RECORDS = 401;
+
     private static final UriMatcher uriMatcher = buildUriMatcher();
 
     private final static UriMatcher buildUriMatcher(){
@@ -38,6 +41,9 @@ public class CatalogueDataProvider extends ContentProvider {
 
         matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Stocks.TABLE_NAME, STOCKS_ALL_RECORDS);
         matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.Stocks.TABLE_NAME+"/#", STOCKS_ONE_RECORD);
+
+        matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.StockImages.TABLE_NAME, STOCK_IMAGES_ALL_RECORDS);
+        matcher.addURI(CatalogueData.CONTENT_AUTHORITY, CatalogueData.StockImages.TABLE_NAME+"/#", STOCK_IMAGES_ONE_RECORDS);
 
         return matcher;
     }
@@ -70,6 +76,12 @@ public class CatalogueDataProvider extends ContentProvider {
 
             case STOCKS_ONE_RECORD:
                 return CatalogueData.Stocks.CONTENT_ITEM_TYPE;
+
+            case STOCK_IMAGES_ALL_RECORDS:
+                return CatalogueData.StockImages.CONTENT_ALL_TYPE;
+
+            case STOCK_IMAGES_ONE_RECORDS:
+                return CatalogueData.StockImages.CONTENT_ITEM_TYPE;
 
             default:
                 throw new UnsupportedOperationException("404 URI Not Found: "+ uri);
@@ -153,6 +165,30 @@ public class CatalogueDataProvider extends ContentProvider {
                 );
                 break;
 
+            case STOCK_IMAGES_ALL_RECORDS:
+                c = db.query(
+                        CatalogueData.StockImages.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+
+            case STOCK_IMAGES_ONE_RECORDS:
+                c = db.query(
+                        CatalogueData.StockImages.TABLE_NAME,
+                        projection,
+                        CatalogueData.StockImages.COL_ID +"="+ ContentUris.parseId(uri),
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+
             default:
                 throw new UnsupportedOperationException("404 URI Not Found: "+ uri);
         }
@@ -195,6 +231,17 @@ public class CatalogueDataProvider extends ContentProvider {
                         values);
                 if(_id > 0){
                     returnUri = CatalogueData.Stocks.buildUri(_id);
+                }else{
+                    throw new SQLException("Failed to insert row into: "+ uri);
+                }
+                break;
+
+            case STOCK_IMAGES_ALL_RECORDS:
+                _id = db.insert(CatalogueData.StockImages.TABLE_NAME,
+                        null,
+                        values);
+                if(_id > 0){
+                    returnUri = CatalogueData.StockImages.buildUri(_id);
                 }else{
                     throw new SQLException("Failed to insert row into: "+ uri);
                 }
