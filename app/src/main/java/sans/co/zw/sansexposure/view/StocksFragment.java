@@ -132,23 +132,27 @@ public class StocksFragment  extends Fragment
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        //move cursor to position of the current clicked stock item
         this.c.moveToPosition(position-1);
 
-        //get the code of the clicked item
+        //get the code of the clicked stock item
         String code = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_CODE);
 
-        // Constructs a selection clause that matches the desired clicked item.
+        // Constructs a selection clause that matches the desired clicked stock item.
         String mSelectionClause = CatalogueData.StockImages.COL_STOCK_ITEM + " = ?";
 
-        // Moves the user's input string to the selection arguments.
+        // Moves the user's selected stock items code to the selection arguments.
         String[] mSelectionArgs = new String[]{ code };
 
+        //perform search for the stock items related images
+        //SELECT * FROM STOCK_IMAGES WHERE STOCK_IMAGES.STOCK_ITEM_NAME = code
         Cursor cursor = getActivity().getContentResolver().query(
                 CatalogueData.StockImages.CONTENT_URI,  // The content URI of the words table
                 STOCK_IMAGES_COLUNMS,                   // The columns to return for each row
                 mSelectionClause,                       // Either null, or the desired related items
                 mSelectionArgs,                         // Either empty, or the desired related items
-                null);
+                null);                                  //sort order null is default
 
         // Some providers return null if an error occurs, others throw an exception
         if (null == cursor) {
@@ -166,7 +170,7 @@ public class StocksFragment  extends Fragment
             cursor.moveToFirst();
             while (cursor.isAfterLast() == false) {
                 Toast.makeText(getActivity(),
-                        cursor.getString(CatalogueData.StockImages.CURSOR_COL_STOCK_IMAGES_STOCK_ITEM),
+                        cursor.getString(CatalogueData.StockImages.CURSOR_COL_STOCK_IMAGES_LOCATION),
                         Toast.LENGTH_SHORT).show();
                 cursor.moveToNext();
             }
