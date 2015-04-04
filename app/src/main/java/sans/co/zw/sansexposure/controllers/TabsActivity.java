@@ -1,5 +1,6 @@
 package sans.co.zw.sansexposure.controllers;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import sans.co.zw.sansexposure.R;
+import sans.co.zw.sansexposure.helpers.Router;
+import sans.co.zw.sansexposure.model.StockItem;
 import sans.co.zw.sansexposure.view.CategoriesFragment;
 import sans.co.zw.sansexposure.view.DesignersFragment;
 import sans.co.zw.sansexposure.view.StocksFragment;
@@ -21,7 +24,8 @@ import sans.co.zw.sansexposure.view.StocksFragment;
 
 public class TabsActivity extends ActionBarActivity implements
         ActionBar.TabListener,
-        ViewPager.OnPageChangeListener{
+        ViewPager.OnPageChangeListener,
+        Router{
 
     ViewPager mViewPager;
     ActionBar actionBar;
@@ -137,6 +141,24 @@ public class TabsActivity extends ActionBarActivity implements
                 null
         );
         return c;
+    }
+
+
+    @Override
+    public void swapFragments(int number) {
+
+    }
+
+    @Override
+    public void launchTabsAcitivity() {
+
+    }
+
+    @Override
+    public void launchGalleryActivity(StockItem stockItem) {
+        Intent intent  = new Intent(this, GalleryActivity.class);
+        intent.putExtra(GalleryActivity.STOCK_ITEM, stockItem);
+        startActivity(intent);
     }
 }
 

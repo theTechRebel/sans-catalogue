@@ -30,6 +30,8 @@ import sans.co.zw.sansexposure.helpers.Router;
 import sans.co.zw.sansexposure.R;
 import sans.co.zw.sansexposure.helpers.UserPreferences;
 import sans.co.zw.sansexposure.model.CatalogueData;
+import sans.co.zw.sansexposure.model.StockItem;
+import sans.co.zw.sansexposure.view.GalleryFragment;
 import sans.co.zw.sansexposure.view.MainFragment;
 
 public class MainActivity extends ActionBarActivity implements Router {
@@ -109,6 +111,10 @@ public class MainActivity extends ActionBarActivity implements Router {
     public void launchTabsAcitivity() {
         Intent intent = new Intent(this, TabsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void launchGalleryActivity(StockItem stockItem) {
     }
 
     private void save(Uri contentUri){

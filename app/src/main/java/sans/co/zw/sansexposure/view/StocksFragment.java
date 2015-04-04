@@ -1,6 +1,7 @@
 package sans.co.zw.sansexposure.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,10 +24,14 @@ import com.etsy.android.grid.util.DynamicHeightImageView;
 import com.etsy.android.grid.util.DynamicHeightTextView;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 import sans.co.zw.sansexposure.R;
+import sans.co.zw.sansexposure.controllers.TabsActivity;
+import sans.co.zw.sansexposure.helpers.Router;
 import sans.co.zw.sansexposure.model.CatalogueData;
 import sans.co.zw.sansexposure.model.CatalogueDataLoader;
+import sans.co.zw.sansexposure.model.StockItem;
 
 /**
  * Created by Steve on 29/03/2015.
@@ -36,6 +41,8 @@ public class StocksFragment  extends Fragment
         AbsListView.OnScrollListener,
         AbsListView.OnItemClickListener,
         LoaderManager.LoaderCallbacks<Cursor>{
+
+    private Router router;
 
     private static final String TAG = "StocksFragment";
 
@@ -76,6 +83,7 @@ public class StocksFragment  extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        router = (Router)getActivity();
         return inflater.inflate(R.layout.fragment_staggeredgridview, container, false);
     }
 
@@ -138,6 +146,13 @@ public class StocksFragment  extends Fragment
 
         //get the code of the clicked stock item
         String code = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_CODE);
+        String designer = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_DESIGNER);
+        String price = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_PRICE);
+        String itemName = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_ITEM_NAME);
+        String collection = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_COLLECTION);
+        String sex = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_SEX);
+        String pic = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_PIC);
+
 
         // Constructs a selection clause that matches the desired clicked stock item.
         String mSelectionClause = CatalogueData.StockImages.COL_STOCK_ITEM + " = ?";
@@ -147,12 +162,19 @@ public class StocksFragment  extends Fragment
 
         //perform search for the stock items related images
         //SELECT * FROM STOCK_IMAGES WHERE STOCK_IMAGES.STOCK_ITEM_NAME = code
-        Cursor cursor = getActivity().getContentResolver().query(
-                CatalogueData.StockImages.CONTENT_URI,  // The content URI of the words table
-                STOCK_IMAGES_COLUNMS,                   // The columns to return for each row
-                mSelectionClause,                       // Either null, or the desired related items
-                mSelectionArgs,                         // Either empty, or the desired related items
-                null);                                  //sort order null is default
+
+        Cursor cursor = null;                                  //sort order null is default
+        try {
+            cursor = getActivity().getContentResolver().query(
+                    CatalogueData.StockImages.CONTENT_URI,  // The content URI of the words table
+                    STOCK_IMAGES_COLUNMS,                   // The columns to return for each row
+                    mSelectionClause,                       // Either null, or the desired related items
+                    mSelectionArgs,                         // Either empty, or the desired related items
+                    null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG, e.toString());
+        }
 
         // Some providers return null if an error occurs, others throw an exception
         if (null == cursor) {
@@ -167,14 +189,22 @@ public class StocksFragment  extends Fragment
                     Toast.LENGTH_SHORT).show();
         } else {
             // Insert code here to do something with the results
+            ArrayList<String> imgLocationsList = new ArrayList<>();
             cursor.moveToFirst();
             while (cursor.isAfterLast() == false) {
-                Toast.makeText(getActivity(),
-                        cursor.getString(CatalogueData.StockImages.CURSOR_COL_STOCK_IMAGES_LOCATION),
-                        Toast.LENGTH_SHORT).show();
+                imgLocationsList.add(cursor.getString(CatalogueData.StockImages.CURSOR_COL_STOCK_IMAGES_LOCATION));
                 cursor.moveToNext();
             }
             cursor.close();
+
+            //create an object of the selected stock item
+            String[] imgLocationArray = new String[imgLocationsList.size()];
+            imgLocationArray = imgLocationsList.toArray(imgLocationArray);
+
+            StockItem stockItem = new StockItem(imgLocationArray,designer,price,code,itemName,collection,pic,sex);
+
+            //launch the new activity with a stock item object as the argument
+            router.launchGalleryActivity(stockItem);
         }
 
 

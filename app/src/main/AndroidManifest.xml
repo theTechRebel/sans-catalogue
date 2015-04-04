@@ -21,6 +21,10 @@
             android:name=".controllers.TabsActivity"
             android:label="@string/title_activity_tabs" >
         </activity>
+        <activity
+            android:name=".controllers.GalleryActivity"
+            android:label="@string/title_activity_gallery" >
+        </activity>
         <provider
             android:authorities="sans.co.zw.sansexposure.model.CatalogueDataProvider"
             android:name=".model.CatalogueDataProvider">
