@@ -1,5 +1,7 @@
 package sans.co.zw.sansexposure.helpers;
 
+import android.support.annotation.Nullable;
+
 import sans.co.zw.sansexposure.model.StockItem;
 
 /**
@@ -9,4 +11,5 @@ public interface Router {
     void swapFragments(int number);
     void launchTabsAcitivity();
     void launchGalleryActivity(StockItem stockItem);
+    void switchFragmentsAgain(int i, @Nullable StockItem stockItem);
 }

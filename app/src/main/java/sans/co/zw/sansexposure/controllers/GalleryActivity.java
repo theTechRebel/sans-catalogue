@@ -11,15 +11,18 @@ import java.io.File;
 import java.io.Serializable;
 
 import sans.co.zw.sansexposure.R;
+import sans.co.zw.sansexposure.helpers.Router;
 import sans.co.zw.sansexposure.helpers.UserPreferences;
 import sans.co.zw.sansexposure.model.StockItem;
 import sans.co.zw.sansexposure.view.GalleryFragment;
 import sans.co.zw.sansexposure.view.MainFragment;
+import sans.co.zw.sansexposure.view.OrderFragment;
 
 /**
  * Created by Steve on 03/04/2015.
  */
-public class GalleryActivity extends ActionBarActivity{
+public class GalleryActivity extends ActionBarActivity
+    implements Router{
 
     UserPreferences userPrefs;
     private static String TAG = "GalleryActivity";
@@ -31,20 +34,42 @@ public class GalleryActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
         stockItem = (StockItem)getIntent().getSerializableExtra(STOCK_ITEM);
-        switchFragments(0);
+        switchFragmentsAgain(0,null);
     }
 
-    private void switchFragments (int n){
+     @Override
+    public void switchFragmentsAgain(int n, StockItem stockItem){
         Fragment f = new Fragment();
         Bundle args = new Bundle();
 
         switch (n) {
             case 0:
                 f = new GalleryFragment();
-                args.putSerializable(GalleryFragment.STOCK_ITEM, stockItem);
+                args.putSerializable(GalleryFragment.STOCK_ITEM, this.stockItem);
+                f.setArguments(args);
+                break;
+
+            case 1:
+                f = new OrderFragment();
+                args.putSerializable(OrderFragment.STOCK_ITEM, stockItem);
                 f.setArguments(args);
                 break;
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.container, f).commit();
+    }
+
+    @Override
+    public void swapFragments(int number) {
+
+    }
+
+    @Override
+    public void launchTabsAcitivity() {
+
+    }
+
+    @Override
+    public void launchGalleryActivity(StockItem stockItem) {
+
     }
 }

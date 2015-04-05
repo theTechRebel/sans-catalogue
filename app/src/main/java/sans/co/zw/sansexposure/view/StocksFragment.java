@@ -146,10 +146,10 @@ public class StocksFragment  extends Fragment
 
         //get the code of the clicked stock item
         String code = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_CODE);
-        String designer = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_DESIGNER);
-        String price = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_PRICE);
-        String itemName = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_ITEM_NAME);
-        String collection = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_COLLECTION);
+        String designer = "by "+this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_DESIGNER).replaceAll("_", " ");
+        String price = "$"+this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_PRICE)+".oo";
+        String itemName = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_ITEM_NAME).replaceAll("_", " ");
+        String collection = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_COLLECTION).replaceAll("_", " ");
         String sex = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_SEX);
         String pic = this.c.getString(CatalogueData.Stocks.CURSOR_COL_STOCKS_PIC);
 
@@ -176,6 +176,8 @@ public class StocksFragment  extends Fragment
             Log.d(TAG, e.toString());
         }
 
+        code = "Item Code: " + code;
+
         // Some providers return null if an error occurs, others throw an exception
         if (null == cursor) {
             // Insert code here to handle the error.
@@ -191,6 +193,7 @@ public class StocksFragment  extends Fragment
             // Insert code here to do something with the results
             ArrayList<String> imgLocationsList = new ArrayList<>();
             cursor.moveToFirst();
+            imgLocationsList.add(pic);
             while (cursor.isAfterLast() == false) {
                 imgLocationsList.add(cursor.getString(CatalogueData.StockImages.CURSOR_COL_STOCK_IMAGES_LOCATION));
                 cursor.moveToNext();

@@ -3,6 +3,7 @@ package sans.co.zw.sansexposure.controllers;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.ActionBar;
@@ -159,6 +160,11 @@ public class TabsActivity extends ActionBarActivity implements
         Intent intent  = new Intent(this, GalleryActivity.class);
         intent.putExtra(GalleryActivity.STOCK_ITEM, stockItem);
         startActivity(intent);
+    }
+
+    @Override
+    public void switchFragmentsAgain(int i, @Nullable StockItem stockItem) {
+
     }
 }
 

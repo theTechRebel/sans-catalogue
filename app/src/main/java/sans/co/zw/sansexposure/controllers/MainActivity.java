@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -115,6 +116,11 @@ public class MainActivity extends ActionBarActivity implements Router {
 
     @Override
     public void launchGalleryActivity(StockItem stockItem) {
+    }
+
+    @Override
+    public void switchFragmentsAgain(int i, @Nullable StockItem stockItem) {
+
     }
 
     private void save(Uri contentUri){
